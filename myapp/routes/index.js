@@ -25,10 +25,12 @@ router.get('/', function(req, res, next) {
   })
 });
 
+//글 생성 페이지 이동 
 router.get('/post_make', function(req, res, next) {
   res.render('post_make');
 });
 
+//글 상세 페이지 이동
 router.get('/post/:id',function(req, res, next) {
   let id = req.params.id;
   models.post.findAll({
@@ -55,6 +57,61 @@ router.get('/post/:id',function(req, res, next) {
   })
 });
 
+//글 수정 페이지 이동
+router.get('/post_update/:id',function(req,res,next) {
+  let id = req.params.id;
+  models.post.findOne({
+    where: {id:id}
+  })
+  .then(result =>{
+    res.render("post_update",{
+      post:result
+    });
+  })
+  .catch(err=>{
+    console.log("수정 데이터 조회 실패");
+  })
+});
+
+//글 수정
+router.put('/post_update/:id', function(req, res, next) {
+  let id = req.params.id;
+  let body = req.body;
+  models.post.findOne({
+    where:{id:id}
+  })
+  .then(result=>{
+    models.post.update({
+      description:body.description
+    },{
+      where:{id:id}
+    })
+    .then(result2 =>{
+      console.log("수정완료");
+      res.redirect('/');
+    })
+  })
+  .catch(err=>{
+    console.log(err,"수정 실패");
+  })
+});
+
+//글 삭제
+router.delete('/post_delete/:id', function(req, res, next) {
+  let id = req.params.id;
+  models.post.destroy({
+    where:{id:id}
+  })
+  .then(result=>{
+    console.log("글 삭제");
+    res.redirect('/');
+  })
+  .catch(err=>{
+    console.log("글 삭제 실패");
+  });
+});
+
+//글 생성
 router.post('/post_make', function(req, res, next) {
   let body = req.body;
   models.post.create({

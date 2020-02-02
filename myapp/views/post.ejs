@@ -1,38 +1,27 @@
-<title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-</head>
-  <body>
-    <section class="section1">
-      <div id="post-wrap">
-        <div id="post-title">
-          <% for(let i=0; i<post.length; i++) {%>
-            <h3><%=post[i].data.title%></h3>
-        </div>
-        <div class="post-info">
-          <span class="writer">글쓴이: <%=post[i].data.user%></span>
-          <span class="date">날짜: <%=post[i].date%></span>
+<% include ./index/top.ejs%>
+  <section class="section1">
+    <div id="post_wrap">
+      <div id="post_title">
+        <% for(let i=0; i<post.length; i++) {%>
+          <h3><%=post[i].data.title%></h3>
       </div>
-      <div class="post-content">
-        <p><%=post[i].data.description%></p>
-      </div>
-      <div id="post_update_btn_wrap">
-      <form action="/post_update/<%=post[i].data.id%>" method="post">
-        <button type="submit" name="post_update_btn">글 수정</button>
-      </form>
-      </div>
-      <div id="post_delete_btn_wrap">
-      <form action="/post_delete/<%=post[i].data.id%>" method="post">
-        <button type="submit" name="post_delete_btn">글 삭제</button>
-      </form>
-      </div>
-      <%}%>
+      <div id="post_info">
+        <div id="post_user">글쓴이: <%=post[i].data.user%></div>
+        <div id ="post_date">날짜: <%=post[i].date%></div>
+    </div>
+    <div id="post_content">
+      <p><%=post[i].data.description%></p>
+    </div>
+    <div id="post_update_btn_wrap">
+      <button type="submit" onclick="location.href='/post_update/<%=post[i].data.id%>'" id="post_update_btn">글 수정</button>
+    </div>
+    <div id="post_delete_btn_wrap">
+    <form action="/post_delete/<%=post[i].data.id%>?_method=DELETE" method="post">
+      <button type="submit" id="post_delete_btn">글 삭제</button>
+    </form>
+    </div>
+    <%}%>
 
-      </div>
-    </section>
-  </body>
-</html>
+    </div>
+  </section>
+<% include ./index/foot.ejs%>

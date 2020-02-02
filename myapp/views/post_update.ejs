@@ -1,0 +1,22 @@
+<% include ./index/top.ejs%>
+<section class="section1">
+  <h2>게시글을 수정해주세요</h2>
+  <form action="/post_update/<%=post.id%>?_method=PUT" method="post">  
+    <div id="update_title">
+      <input type="text" name="title" id="update_title" class="create_title" value="<%=post.title%>" disabled>
+    </div>
+    <div id="update_user">
+      <input type="text" name="writer" id="update_writer" class="create_user" value="<%=post.user%>" disabled>
+    </div>
+    <div id="update_description">
+      <textarea cols="100" name="description" id="update_description" class="content" ><%=post.description%></textarea>
+    </div>
+    <div id="update_btn_wrap">
+      <button type="submit" id="update_btn">글 수정</button>
+    </div>
+    <div id="update_back_btn_wrap">
+      <button type="button" onclick="location.href='/post/<%=post.id%>'" id="update_back_btn">돌아가기</button>
+    </div>
+  </form>
+</section>
+<% include ./index/foot.ejs%>
