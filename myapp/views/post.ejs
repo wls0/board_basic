@@ -19,9 +19,49 @@
     <form action="/post_delete/<%=post[i].data.id%>?_method=DELETE" method="post">
       <button type="submit" id="post_delete_btn">글 삭제</button>
     </form>
-    </div>
     <%}%>
-
+    </div>
+      <table class="table table-bordered">
+        <thead>
+          <th>댓글 목록</th>
+        </thead>
+        <tbody>
+          <% for(let j=0; j<reply.length; j++) {%>
+          <tr>
+            <td><%=reply[j].data.user%></td>
+            <td><%=reply[j].data.reply%></td>
+            <td><%=reply[j].date%>
+            <div id="reply_update_btn">
+              <form action="/reply_update/<%=reply[j].data.id%>?_method=put" method="POST">
+                <input type="text" name="reply">
+                <button type="submit" id="reply_update_btn">수정</button>
+              </form>
+            </div>
+            <div id="reply_delete_btn">
+              <form action="/reply_delete/<%=reply[j].data.id%>?_method=DELETE" method="POST">
+                <button type="submit" id="reply_delete_btn">삭제</button>
+              </form>
+            </div>
+            </td>
+          </tr>
+          <%}%>
+        </tbody>
+      </table>
+      <!-- 로그인을 하지않았을땐 댓글작성이 안되도록 -->
+    <% for(let i=0; i<post.length; i++) {%>
+      <form action="/reply/<%=post[i].data.id%>" method="POST">
+        <div id="create_reply_user_wrap">
+          <!-- 로그인을 하지않으면  로그인를 하라는 입력창이 출력되게 만들기-->
+          <input type="text" name="reply_user">
+        </div>
+        <div id="create_reply_wrap">
+          <input type="text" name="reply" placeholder="댓글을 작성해주세여">
+        </div>
+        <div id="create_reply_btn_wrap">
+          <button type="submit" id="create_reply_btn">댓글작성</button>
+        </div>
+      </form>
+    <%}%>
     </div>
   </section>
 <% include ./index/foot.ejs%>
