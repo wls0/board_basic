@@ -2,7 +2,26 @@ var express = require('express');
 var router = express.Router();
 let models =require('../models');
 let moment = require('moment');
+const session = require('express-session');
+const MySQLStore = require('express-mysql-session')(session);
 
+var options = {
+  host     : 'localhost',
+  user     : 'root',
+  password : 'abcd1',
+  database : 'board',
+  clearExpired: true,
+  checkExpirationInterval: 900000,
+  expiration: 24000 * 60 * 60,
+};
+
+router.use(session({
+  key: 'sid',
+  secret: 'asdasdzxc',
+  resave: false,
+  saveUninitialized: true,
+  store:new MySQLStore(options)
+}));
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -32,6 +51,7 @@ router.get('/post_make', function(req, res, next) {
 // //글 상세 페이지 이동
 router.get('/post/:id',function(req, res, next) {
   let id = req.params.id;
+  let login_user = req.session.uid;
   models.post.findAll({
     where:{id:id}
   })
@@ -58,7 +78,8 @@ router.get('/post/:id',function(req, res, next) {
           let date=moment(result[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
           posts.push({
             data:result[i],
-            date:date
+            date:date,
+            login_user:login_user
           });
         }
         return posts;
@@ -68,6 +89,7 @@ router.get('/post/:id',function(req, res, next) {
         reply:post2()
       })
     })
+    models.post.increment({view:1}, {where: {id:id}})
   })
   .catch(err=>{
     console.log(err);
@@ -99,6 +121,7 @@ router.put('/post_update/:id', function(req, res, next) {
   })
   .then(result=>{
     models.post.update({
+      title:body.title,
       description:body.description
     },{
       where:{id:id}
@@ -120,6 +143,14 @@ router.delete('/post_delete/:id', function(req, res, next) {
     where:{id:id}
   })
   .then(result=>{
+    models.reply.destroy({
+      where:{
+        postId:id
+      }
+    })
+    .then(result2 =>{
+      console.log("글 댓글 삭제");
+    })
     console.log("글 삭제");
     res.redirect('/');
   })
@@ -170,10 +201,11 @@ router.put('/reply_update/:id', function(req, res, next) {
 router.post("/reply/:id", function(req, res, next) {
   let body = req.body;
   let id = req.params.id;
+  let login_user = req.session.uid;
   console.log(id);
   models.reply.create({
     postId:id,
-    user:'reply user',
+    user: login_user,
     reply:body.reply
   })
   .then(result =>{
@@ -188,10 +220,11 @@ router.post("/reply/:id", function(req, res, next) {
 //글 생성
 router.post('/post_make', function(req, res, next) {
   let body = req.body;
+  let login_user = req.session.uid;
   models.post.create({
     title:body.title,
     description:body.description,
-    user : "user"
+    user : login_user
   })
   .then(result=>{
     console.log("글 추가 완료");

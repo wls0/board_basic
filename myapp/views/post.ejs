@@ -8,6 +8,7 @@
       <div id="post_info">
         <div id="post_user">글쓴이: <%=post[i].data.user%></div>
         <div id ="post_date">날짜: <%=post[i].date%></div>
+        <div id="post_view">조회수: <%=post[i].data.view%></div>
     </div>
     <div id="post_content">
       <p><%=post[i].data.description%></p>
@@ -50,10 +51,8 @@
       <!-- 로그인을 하지않았을땐 댓글작성이 안되도록 -->
     <% for(let i=0; i<post.length; i++) {%>
       <form action="/reply/<%=post[i].data.id%>" method="POST">
-        <div id="create_reply_user_wrap">
           <!-- 로그인을 하지않으면  로그인를 하라는 입력창이 출력되게 만들기-->
-          <input type="text" name="reply_user">
-        </div>
+          <input type="hidden" name="reply_user" value="<%=post[i].login_user%>">
         <div id="create_reply_wrap">
           <input type="text" name="reply" placeholder="댓글을 작성해주세여">
         </div>

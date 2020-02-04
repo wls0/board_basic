@@ -1,0 +1,28 @@
+<% include ./index/top.ejs%>
+<section class="section1">
+  <% if(session.uid){ %>
+    <h3>로그인에 성공하셨습니다 ~</h3>
+    <form action="/users/logout?_method=DELETE" method="post">
+        <input type="submit" value="로그아웃">
+    </form>
+
+<% } else{ %>
+  <form action="/users/login" method="POST">
+    <div class="form-group">
+      <label>id:</label>
+      <input type="text" class="form-control" id="id" name="id">
+    </div>
+    <div class="form-group">
+      <label>password:</label>
+      <input type="password" class="form-control" id="password" name="password">
+    </div>
+    <div id ="login_btn_wrap">
+      <button type="submit" id="login_btn">로그인</button>
+    </div>
+    <div id ="login_join_btn_wrap">
+      <button type="button" onclick="location.href='/users/join'" id="login_join_btn">회원가입</button>
+    </div>
+  </form>
+  <%}%>
+</section>
+<% include ./index/foot.ejs%>

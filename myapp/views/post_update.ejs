@@ -3,7 +3,7 @@
   <h2>게시글을 수정해주세요</h2>
   <form action="/post_update/<%=post.id%>?_method=PUT" method="post">  
     <div id="update_title">
-      <input type="text" name="title" id="update_title" class="create_title" value="<%=post.title%>" disabled>
+      <input type="text" name="title" id="update_title" class="create_title" value="<%=post.title%>">
     </div>
     <div id="update_user">
       <input type="text" name="writer" id="update_writer" class="create_user" value="<%=post.user%>" disabled>

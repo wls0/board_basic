@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       type:DataTypes.STRING,
       allowNull: false
+    },
+    view:{
+      type: DataTypes.INTEGER,
+      defualtValue:0,
+      allowNull : true,
     }
   }, {});
   post.associate = function(models) {
