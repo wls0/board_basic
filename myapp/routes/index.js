@@ -235,10 +235,20 @@ router.get("/search" , function(req, res, next){
     }
   })
   .then(result =>{
-    console.log(result);
+    let post = function(){
+      let posts=[];
+      for(let i =0; i<result.length; i++){
+        let date=moment(result[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
+        posts.push({
+          date:date
+        });
+      }
+      return posts;
+    }
     res.render("search",{
       search:result,
-      session:session
+      session:session,
+      date:post()
     })
   })
 });
