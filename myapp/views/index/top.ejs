@@ -7,3 +7,22 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
   <body>
+    <a href="/">home</a>
+    <%if (session){%>
+    <form action="/users/logout?_method=DELETE" method="post">
+      <input type="submit" value="로그아웃">
+    </form>
+    <%}else{%>
+    <a href="/users/login">login</a>
+    <a href="/users/join">join</a>
+    <%}%>
+    <form action="/search" method="GET">
+      <input type="text" class="form-control" id="search" name="search">
+      <div id="search_btn_wrap">
+        <button type="submit" id="search_btn">검색</button>
+      </div>
+    </form>
+
+
+
+    

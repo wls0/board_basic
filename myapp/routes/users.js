@@ -25,7 +25,10 @@ router.use(session({
 
 //회원가입 페이지 이동
 router.get('/join', function(req, res, next) {
-  res.render("join");
+  let session =req.session;
+  res.render("join",{
+    session:session
+  });
 });
 
 //회원가입
@@ -64,7 +67,6 @@ router.post('/login', async function(req, res, next) {
       idUser:body.id
     }
   });
-
   let db_pwd = result.password;
   let input_pwd = body.password;
   let pwd = crypto.createHash("sha512").update(input_pwd).digest("hex");
@@ -88,8 +90,7 @@ router.delete("/logout", function(req,res,next){
   console.log(req.session);
   req.session.destroy();
   res.clearCookie('sid');
-
-  res.redirect("/users/login")
+  return res.redirect('/');
 })
 
 });

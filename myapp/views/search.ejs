@@ -1,0 +1,27 @@
+<% include ./index/top.ejs%>
+<section class="section1">
+  <table class="table table-bordered">
+  <a href="/post_make">글쓰기</a>
+  <div class="container">
+    <thead>
+      <th>글</th>
+      <th>작성자</th>
+      <th>작성일</th>
+    </thead>
+    <tbody>
+      <%if(search[0] === undefined){%>
+        <td colspan="3" class="non_text">데이터가 없습니다.</td>
+      <%}else if(!search.id){%>
+      <% for(let i=0; i<search.length; i++) { %>
+        <tr>
+          <td><a href="/post/<%=search[i].id%>"><%= search[i].title %></a></td>
+          <td><%= search[i].user %></td>
+          <td><%=search[i].date%></td>
+          <%}%>
+          <%}%>
+        </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+<% include ./index/foot.ejs%>

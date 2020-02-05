@@ -4,6 +4,8 @@ let models =require('../models');
 let moment = require('moment');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
+const sequelize =require('sequelize');
+const Op = sequelize.Op;
 
 var options = {
   host     : 'localhost',
@@ -23,8 +25,10 @@ router.use(session({
   store:new MySQLStore(options)
 }));
 
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  let session =req.session.uid;
   models.post.findAll().then(result=>{
     let post = function(){
       let posts=[];
@@ -38,18 +42,23 @@ router.get('/', function(req, res, next) {
       return posts;
     }
     res.render("index",{
-      post:post()
+      post:post(),
+      session:session
     });
   })
 });
 
 //글 생성 페이지 이동 
 router.get('/post_make', function(req, res, next) {
-  res.render('post_make');
+  let session =req.session;
+  res.render('post_make',{
+    session:session
+  });
 });
 
 // //글 상세 페이지 이동
 router.get('/post/:id',function(req, res, next) {
+  let session =req.session.uid;
   let id = req.params.id;
   let login_user = req.session.uid;
   models.post.findAll({
@@ -86,7 +95,8 @@ router.get('/post/:id',function(req, res, next) {
       }
       res.render("post",{
         post:post(),
-        reply:post2()
+        reply:post2(),
+        session:session
       })
     })
     models.post.increment({view:1}, {where: {id:id}})
@@ -98,13 +108,15 @@ router.get('/post/:id',function(req, res, next) {
 
 //글 수정 페이지 이동
 router.get('/post_update/:id',function(req,res,next) {
+  let session =req.session.uid;
   let id = req.params.id;
   models.post.findOne({
     where: {id:id}
   })
   .then(result =>{
     res.render("post_update",{
-      post:result
+      post:result,
+      session:session
     });
   })
   .catch(err=>{
@@ -194,6 +206,40 @@ router.put('/reply_update/:id', function(req, res, next) {
   })
   .catch(err=>{
     console.log(err,"수정 실패");
+  })
+});
+
+router.get("/search" , function(req, res, next){
+  console.log(req.query.search);
+  let session =req.session;
+  let search = req.query.search;
+  models.post.findAll({
+    where:{
+      [Op.or]:[
+        {
+          title:{
+            [Op.like]:"%"+search+"%"
+          }
+        },
+        {
+          user:{
+            [Op.like]:"%"+search+"%"
+          }
+        },
+        {
+          description:{
+            [Op.like]:"%"+search+"%"
+          }
+        }
+      ]
+    }
+  })
+  .then(result =>{
+    console.log(result);
+    res.render("search",{
+      search:result,
+      session:session
+    })
   })
 });
 
