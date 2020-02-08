@@ -6,6 +6,7 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const sequelize =require('sequelize');
 const Op = sequelize.Op;
+var flash = require('connect-flash');
 
 var options = {
   host     : 'localhost',
@@ -25,9 +26,17 @@ router.use(session({
   store:new MySQLStore(options)
 }));
 
+router.use(flash());
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  let session =req.session.uid;
+  res.render('index',{
+    session:session
+  });
+});
+//게시글 페이지
+router.get('/post', function(req, res, next) {
   let session =req.session.uid;
   models.post.findAll().then(result=>{
     let post = function(){
@@ -41,7 +50,7 @@ router.get('/', function(req, res, next) {
       }
       return posts;
     }
-    res.render("index",{
+    res.render("post",{
       post:post(),
       session:session
     });
@@ -50,13 +59,19 @@ router.get('/', function(req, res, next) {
 
 //글 생성 페이지 이동 
 router.get('/post_make', function(req, res, next) {
-  let session =req.session;
-  res.render('post_make',{
-    session:session
-  });
+  let session =req.session.uid;
+  console.log(session);
+  if(session){
+    res.render('post_make',{
+      session:session
+    });
+  }else{
+    req.flash('login_check','로그인을 해주세요')
+    res.redirect('/users/login_check');
+  }
 });
 
-// //글 상세 페이지 이동
+// 글 상세 페이지 이동
 router.get('/post/:id',function(req, res, next) {
   let session =req.session.uid;
   let id = req.params.id;
@@ -93,7 +108,7 @@ router.get('/post/:id',function(req, res, next) {
         }
         return posts;
       }
-      res.render("post",{
+      res.render("post_board",{
         post:post(),
         reply:post2(),
         session:session
@@ -111,13 +126,25 @@ router.get('/post_update/:id',function(req,res,next) {
   let session =req.session.uid;
   let id = req.params.id;
   models.post.findOne({
-    where: {id:id}
+    where: {
+      id:id,
+    }
   })
   .then(result =>{
-    res.render("post_update",{
-      post:result,
-      session:session
-    });
+    if(session === result.user){
+      res.render("post_update",{
+        post:result,
+        session:session
+      });
+    }else if(!session){
+      console.log("비로그인");
+      req.flash('login_check','로그인을 해주세요.')
+      res.redirect('/users/login_check');
+    }else{
+      console.log("다른 로그인");
+      req.flash('login_different','작성자만 수정 및 삭제가 가능합니다.')
+      res.redirect('/users/login_different');
+    }
   })
   .catch(err=>{
     console.log("수정 데이터 조회 실패");
@@ -151,20 +178,31 @@ router.put('/post_update/:id', function(req, res, next) {
 //글 삭제
 router.delete('/post_delete/:id', function(req, res, next) {
   let id = req.params.id;
+  let session =req.session.uid;
   models.post.destroy({
     where:{id:id}
   })
   .then(result=>{
-    models.reply.destroy({
-      where:{
-        postId:id
-      }
-    })
-    .then(result2 =>{
-      console.log("글 댓글 삭제");
-    })
-    console.log("글 삭제");
-    res.redirect('/');
+    if(session === result.user){
+      models.reply.destroy({
+        where:{
+          postId:id
+        }
+      })
+      .then(result2 =>{
+        console.log("글 댓글 삭제");
+      })
+      console.log("글 삭제");
+      res.redirect('/');
+    }else if(!session){
+      console.log("비로그인");
+      req.flash('login_check','로그인을 해주세요.')
+      res.redirect('/users/login_check');
+    }else{
+      console.log("다른 로그인");
+      req.flash('login_different','작성자만 수정 및 삭제가 가능합니다.')
+      res.redirect('/users/login_different');
+    }
   })
   .catch(err=>{
     console.log("글 삭제 실패");
@@ -209,6 +247,7 @@ router.put('/reply_update/:id', function(req, res, next) {
   })
 });
 
+//검색기능
 router.get("/search" , function(req, res, next){
   console.log(req.query.search);
   let session =req.session;
@@ -276,18 +315,20 @@ router.post("/reply/:id", function(req, res, next) {
 //글 생성
 router.post('/post_make', function(req, res, next) {
   let body = req.body;
+  console.log(body);
   let login_user = req.session.uid;
   models.post.create({
     title:body.title,
     description:body.description,
-    user : login_user
+    user : login_user,
+    view: 0
   })
   .then(result=>{
     console.log("글 추가 완료");
-    res.redirect("/");
+    res.redirect("/post");
   })
   .catch(err=>{
-    console.log("글 추가 실패");
+    console.log("글 추가 실패"+err);
   })
 });
 module.exports = router;

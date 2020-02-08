@@ -4,6 +4,8 @@ const models = require("../models");
 const crypto =require('crypto');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
+var flash = require('connect-flash');
+router.use(flash());
 
 var options = {
   host     : 'localhost',
@@ -25,7 +27,7 @@ router.use(session({
 
 //회원가입 페이지 이동
 router.get('/join', function(req, res, next) {
-  let session =req.session;
+  let session =req.session.uid;
   res.render("join",{
     session:session
   });
@@ -52,10 +54,33 @@ router.post('/join', function(req, res, next) {
 //로그인 페이지 이동
 router.get('/login', function(req, res, next) {
   // console.log(req.cookies);
-  let session =req.session;
-  console.log(session.uid);
+  let session =req.session.uid;
+  console.log(session);
+  // let message = req.flash('login')[0];
   res.render("login", {
     session:session
+  });
+});
+
+//로그인이 안된 세션 접근시
+router.get('/login_check', function(req, res, next) {
+  // console.log(req.cookies);
+  let session =req.session.uid;
+  // console.log(session);
+  let message = req.flash('login_check')[0];
+  res.render("login_check", {
+    session:session,
+    message:message
+  });
+});
+
+//게시물유저와 로그인 유저가 다를시
+router.get('/login_different', function(req, res, next) {
+  let session =req.session.uid;
+  let message = req.flash('login_different')[0];
+  res.render("contect_error", {
+    session:session,
+    message:message
   });
 });
 
@@ -78,7 +103,7 @@ router.post('/login', async function(req, res, next) {
     req.session.uid= body.id;
     console.log(req.session);
     req.session.save(function(){
-      return res.redirect('/users/login');
+      return res.redirect('/');
     });
   }
   else{

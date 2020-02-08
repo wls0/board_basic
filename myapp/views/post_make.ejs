@@ -1,6 +1,6 @@
 <% include ./index/top.ejs%>
 <section class="section1">
-  <form action="/post_make" method="POST">
+  <form action="/post_make" method="POST" name="post_make_frm">
   <div class="form-group">
     <label for="title">title:</label>
     <input type="text" class="form-control" id="title" name="title">
@@ -10,8 +10,23 @@
     <textarea class="form-control" rows="5" id="description" name="description"></textarea>
   </div>
   <div id ="post_make_btn_wrap">
-    <button type="submit" class="btn btn-primary" id="post_make_btn">생성</button>
+    <button type="button" class="btn btn-primary" onclick="post_make()" id="post_make_btn">생성</button>
   </div>  
   </form>
 </section>
+<script type="text/JavaScript">
+  let post_make = function() {
+    if(!document.getElementById('title').value){
+      alert('제목을 작성해주세요.');
+      title.focus();
+      return;
+    }
+    if(!document.getElementById('description').value){
+      alert('작성글을 작성해주세요.');
+      description.focus();
+      return;
+    }
+    post_make_frm.submit();
+  }
+</script>
 <% include ./index/foot.ejs%>
