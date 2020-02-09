@@ -179,21 +179,26 @@ router.put('/post_update/:id', function(req, res, next) {
 router.delete('/post_delete/:id', function(req, res, next) {
   let id = req.params.id;
   let session =req.session.uid;
-  models.post.destroy({
+  models.post.findOne({
     where:{id:id}
   })
-  .then(result=>{
-    if(session === result.user){
-      models.reply.destroy({
-        where:{
-          postId:id
-        }
+  .then(result1=>{
+    if(session === result1.user){
+      models.post.destroy({
+        where:{id:id}
       })
-      .then(result2 =>{
-        console.log("글 댓글 삭제");
+      .then(result2=>{
+        models.reply.destroy({
+          where:{
+            postId:id
+          }
+        })
+        .then(result3 =>{
+          console.log("글 댓글 삭제");
+        })
+        console.log("글 삭제");
+        res.redirect('/');
       })
-      console.log("글 삭제");
-      res.redirect('/');
     }else if(!session){
       console.log("비로그인");
       req.flash('login_check','로그인을 해주세요.')
@@ -209,41 +214,65 @@ router.delete('/post_delete/:id', function(req, res, next) {
   });
 });
 
+
 //댓글 삭제
 router.delete('/reply_delete/:id', function(req, res, next) {
   let id = req.params.id;
-  models.reply.destroy({
+  let session =req.session.uid;
+  models.reply.findOne({
     where:{id:id}
   })
   .then(result=>{
-    console.log("글 삭제");
-    res.redirect('back');
-  })
-  .catch(err=>{
-    console.log("글 삭제 실패");
-  });
+    if(session === result.user){
+      models.reply.destroy({
+        where:{id:id}
+      })
+      .then(result=>{
+        console.log("글 삭제");
+        res.redirect('back');
+      })
+      .catch(err=>{
+        console.log("글 삭제 실패");
+      });
+    }else if(session !== result.user){
+      console.log("다른 로그인");
+      req.flash('login_different','작성자만 수정 및 삭제가 가능합니다.')
+      res.redirect('/users/login_different');
+    }else{
+      console.log("비로그인");
+      req.flash('login_check','로그인을 해주세요.')
+      res.redirect('/users/login_check');
+    }
+  }) 
 });
 
 //댓글 수정
 router.put('/reply_update/:id', function(req, res, next) {
   let id = req.params.id;
   let body = req.body;
+  let session =req.session.uid;
   models.reply.findOne({
     where:{id:id}
   })
   .then(result=>{
-    models.reply.update({
-      reply:body.reply
-    },{
-      where:{id:id}
-    })
-    .then(result2 =>{
-      console.log("수정완료");
-      res.redirect('back');
-    })
-  })
-  .catch(err=>{
-    console.log(err,"수정 실패");
+    if(session === result.user){
+      models.reply.update({
+        reply:body.reply
+      },{
+        where:{id:id}
+      })
+      .then(result2 =>{
+        console.log("수정완료");
+        res.redirect('back');
+      })
+      .catch(err=>{
+        console.log(err,"수정 실패");
+      })
+    }else if(session !== result.user){
+      console.log("다른 로그인");
+      req.flash('login_different','작성자만 수정 및 삭제가 가능합니다.')
+      res.redirect('/users/login_different');
+    }
   })
 });
 
@@ -298,18 +327,23 @@ router.post("/reply/:id", function(req, res, next) {
   let id = req.params.id;
   let login_user = req.session.uid;
   console.log(id);
-  models.reply.create({
-    postId:id,
-    user: login_user,
-    reply:body.reply
-  })
-  .then(result =>{
-    console.log("댓글 작성 완료");
-    res.redirect('/post/'+id);
-  })
-  .catch(err=>{
-    console.log(err+"댓글 작성 실패");
-  })
+  if(login_user){
+    models.reply.create({
+      postId:id,
+      user: login_user,
+      reply:body.reply
+    })
+    .then(result =>{
+      console.log("댓글 작성 완료");
+      res.redirect('/post/'+id);
+    })
+    .catch(err=>{
+      console.log(err+"댓글 작성 실패");
+    })
+  }else{
+    req.flash('login_check','로그인을 해주세요')
+    res.redirect('/users/login_check');
+  }
 });
 
 //글 생성
