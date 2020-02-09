@@ -110,13 +110,14 @@ router.post('/login', async function(req, res, next) {
     console.log("로그인 비밀번호 불일치");
     res.redirect("/users/login");
   }
-//로그아웃
+  //로그아웃
+
+});
 router.delete("/logout", function(req,res,next){
   console.log(req.session);
   req.session.destroy();
   res.clearCookie('sid');
   return res.redirect('/');
-})
-
 });
+
 module.exports = router;

@@ -1,6 +1,7 @@
 <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../public/stylesheets/style.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -16,12 +17,22 @@
     <a href="/users/login">login</a>
     <a href="/users/join">join</a>
     <%}%>
-    <form action="/search" method="GET">
+    <form action="/search" method="GET" name="frm_search">
       <input type="text" class="form-control" id="search" name="search">
       <div id="search_btn_wrap">
-        <button type="submit" id="search_btn">검색</button>
+        <button type="button" id="search_btn" onclick="search_start()">검색</button>
       </div>
     </form>
+    <script>
+      let search_start = function () {
+        if(!document.getElementById('search').value){
+          alert('검색어을 작성해주세요.');
+          search.focus();
+          return;
+        }
+        frm_search.submit();
+      }
+    </script>
 
 
 

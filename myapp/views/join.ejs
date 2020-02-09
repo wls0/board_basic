@@ -1,6 +1,6 @@
 <% include ./index/top.ejs%>
 <section class="section1">
-  <form action="/users/join" method="POST">
+  <form action="/users/join" method="POST" name="frm_join">
     <div class="form-group">
       <label>id:</label>
       <input type="text" class="form-control" id="id" name="id">
@@ -14,11 +14,31 @@
       <input type="text" class="form-control" id="username" name="username">
     </div>
     <div id ="join_btn_wrap">
-      <button type="submit" id="join_btn">회원가입</button>
+      <button type="submit" id="join_btn" onclick="join()">회원가입</button>
     </div>
     <div id ="join_back_btn_wrap">
       <button type="button" onclick="location.href='/'" id="join_back_btn">돌아가기</button>
     </div>
   </form>
 </section>
+<script>
+  let join = function () {
+    if(!document.getElementById('id').value){
+      alert('아이디를 입력해주세요.');
+      id.focus();
+      return;
+    }
+    if(!document.getElementById('password').value){
+      alert('비밀번호를 입력해주세요.');
+      password.focus();
+      return;
+    }
+    if(!document.getElementById('username').value){
+      alert('이름을 입력해주세요.');
+      username.focus();
+      return;
+    }
+    frm_join.submit();
+  }
+</script>
 <% include ./index/foot.ejs%>

@@ -11,7 +11,7 @@
     alert("<%= message%>");
   </script>
 
-  <form action="/users/login" method="POST">
+  <form action="/users/login" method="POST" name="frm_login">
     <div class="form-group">
       <label>id:</label>
       <input type="text" class="form-control" id="id" name="id">
@@ -21,7 +21,7 @@
       <input type="password" class="form-control" id="password" name="password">
     </div>
     <div id ="login_btn_wrap">
-      <button type="submit" id="login_btn">로그인</button>
+      <button type="button" id="login_btn" onclick="login_check()">로그인</button>
     </div>
     <div id ="login_join_btn_wrap">
       <button type="button" onclick="location.href='/users/join'" id="login_join_btn">회원가입</button>
@@ -29,4 +29,19 @@
   </form>
   <%}%>
 </section>
+<script>
+  let login_check = function () {
+    if(!document.getElementById('id').value){
+      alert('아이디를 입력해주세요.');
+      id.focus();
+      return;
+    }
+    if(!document.getElementById('password').value){
+      alert('비밀번호를 입력해주세요.');
+      id.focus();
+      return;
+    }
+    frm_login.submit();
+  }
+</script>
 <% include ./index/foot.ejs%>

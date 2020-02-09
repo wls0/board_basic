@@ -33,9 +33,9 @@
             <td><%=reply[j].data.reply%></td>
             <td><%=reply[j].date%>
             <div id="reply_update_btn">
-              <form action="/reply_update/<%=reply[j].data.id%>?_method=put" method="POST">
-                <input type="text" name="reply">
-                <button type="submit" id="reply_update_btn" onclick="">수정</button>
+              <form action="/reply_update/<%=reply[j].data.id%>?_method=put" method="POST" name="frm_reply_update">
+                <input type="text" name="reply_up" id="reply_up">
+                <button type="button"" id="reply_update_btn" onclick="reply_update()">수정</button>
               </form>
             </div>
             <div id="reply_delete_btn">
@@ -50,18 +50,35 @@
       </table>
       <!-- 로그인을 하지않았을땐 댓글작성이 안되도록 -->
     <% for(let i=0; i<post.length; i++) {%>
-      <form action="/reply/<%=post[i].data.id%>" method="POST">
+      <form action="/reply/<%=post[i].data.id%>" method="POST" name="frm_reply_make">
           <!-- 로그인을 하지않으면  로그인를 하라는 입력창이 출력되게 만들기-->
           <input type="hidden" name="reply_user" value="<%=post[i].login_user%>">
         <div id="create_reply_wrap">
-          <input type="text" name="reply" placeholder="댓글을 작성해주세여">
+          <input type="text" name="reply" id="reply" placeholder="댓글을 작성해주세여">
         </div>
         <div id="create_reply_btn_wrap">
-          <button type="submit" id="create_reply_btn">댓글작성</button>
+          <button type="button" id="create_reply_btn" onclick="reply_make()">댓글작성</button>
         </div>
       </form>
       <%}%>
     </div>
   </section>
-
+<script>
+  let reply_update =function (){
+    if(!document.getElementById('reply_up').value){
+      alert('수정댓글을 작성해주세요.');
+      reply_up.focus();
+      return;
+    }
+    frm_reply_update.submit();
+  } 
+  let reply_make = function () {
+    if(!document.getElementById('reply').value){
+      alert('댓글을 작성해주세요.');
+      reply.focus();
+      return;
+    }
+    frm_reply_make.submit();
+  }
+</script>
 <% include ./index/foot.ejs%>

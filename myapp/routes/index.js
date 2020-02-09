@@ -257,7 +257,7 @@ router.put('/reply_update/:id', function(req, res, next) {
   .then(result=>{
     if(session === result.user){
       models.reply.update({
-        reply:body.reply
+        reply:body.reply_up
       },{
         where:{id:id}
       })
