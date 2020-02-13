@@ -1,8 +1,136 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+a {
+  color: black;
+}
+tbody tr td a{
+  color:#343a40;
+}   
+.layout{
+  width: 1140px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.logo_wrap{
+  margin-top: 30px;
+  margin-left: 150px;
+  margin-bottom: 30px;
+}
+.logo_wrap .logo{
+  display: inline-block;
+  margin-right: 20px;
+  width: 260px;
+}
+.logo img{
+  width: 100%;
+  height: 70px;
+  padding-top: 20px;
+}
+#search_input_wrap{
+  display: inline-block;
+}
+#search_input_wrap #search{
+  display: inline-block;
+  width: 500px;
+  height: 10px;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 2px;
+}
+#search_btn_wrap {
+  display: inline-block;
+}
+#search_btn_wrap #search_btn{
+  height: 40px;
+  margin-top: 14px;
+  background-color: #ff3f0a;
+  border-color: #ff3f0a;
+  border-radius: 2px;
 }
 
-a {
-  color: #00B7FF;
+
+#header2 #top_nav{
+  display: inline-block;
+}
+#header2 #top_login{
+  display: inline-block;
+  float: right;
+  margin-top: 6px;
+}
+#header2 #top_login a{
+  color: #fff;
+}
+#header2 #top_login .top_login_login{
+  display: inline-block;
+}
+
+#header2 #top_login .top_login_sign{
+  display: inline-block;
+}
+#header2 #top_logout{
+  display: inline-block;
+  float: right;
+  margin-top: 8px;
+}
+
+
+.board_list_wrap{
+  border-bottom: 3px #343a40 solid;
+  padding-top: 20px;
+}
+.board_list_wrap a{
+  font-size: 40px;
+  font-weight: bold;
+}
+ 
+
+#post_wrap #post_title{
+  padding-top: 25px;
+  display: block;
+}
+#post_wrap #post_title a{
+  font-size: 24px;
+}
+#post_info{
+  border-bottom: 2px black solid;
+  font-size: 12px;
+}
+#post_info #post_user{
+  display: inline-block;
+  float: left;
+  border-right: 1px #ced4da solid;
+  padding-right: 16px;
+}
+#post_info #post_date{
+  display: inline-block;
+  padding-left: 16px;
+}
+#post_info #post_view{
+  display: inline-block;
+  float: right;
+}
+#post_content{
+  margin-top: 120px;
+  margin-bottom: 100px;
+}
+#post_board_btn_wrap{
+  display: block;
+  text-align: center;
+}
+#post_board_btn_wrap #post_update_btn_wrap{
+  display: inline-block;
+}
+#post_board_btn_wrap #post_update_btn_wrap #post_update_btn{
+
+}
+#post_board_btn_wrap #post_delete_btn_wrap{
+  display: inline-block;
+}
+#post_board_btn_wrap #post_delete_btn_wrap #post_delete_btn{
+
 }

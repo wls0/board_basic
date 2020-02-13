@@ -1,28 +1,31 @@
 <% include ./index/top.ejs%>
+<div class="layout">
   <section class="section1">
     <div id="post_wrap">
       <div id="post_title">
         <% for(let i=0; i<post.length; i++) {%>
-          <h3><%=post[i].data.title%></h3>
+          <a><%=post[i].data.title%></a>
       </div>
       <div id="post_info">
-        <div id="post_user">글쓴이: <%=post[i].data.user%></div>
-        <div id ="post_date">날짜: <%=post[i].date%></div>
-        <div id="post_view">조회수: <%=post[i].data.view%></div>
+        <div id="post_user"><%=post[i].data.user%></div>
+        <div id ="post_date"><%=post[i].date%></div>
+        <div id="post_view">조회: <%=post[i].data.view%></div>
     </div>
     <div id="post_content">
       <p><%=post[i].data.description%></p>
     </div>
-    <div id="post_update_btn_wrap">
-      <button type="submit" onclick="location.href='/post_update/<%=post[i].data.id%>'" id="post_update_btn">글 수정</button>
-    </div>
-    <div id="post_delete_btn_wrap">
-    <form action="/post_delete/<%=post[i].data.id%>?_method=DELETE" method="post">
-      <button type="submit" id="post_delete_btn">글 삭제</button>
-    </form>
+    <div id="post_board_btn_wrap">
+      <div id="post_update_btn_wrap">
+        <button type="submit" onclick="location.href='/post_update/<%=post[i].data.id%>'" id="post_update_btn">글 수정</button>
+      </div>
+      <div id="post_delete_btn_wrap">
+      <form action="/post_delete/<%=post[i].data.id%>?_method=DELETE" method="post">
+        <button type="submit" id="post_delete_btn">글 삭제</button>
+      </form>
+      </div>
     </div>
     <%}%>
-      <table class="table table-bordered">
+      <table class="table table-bordered table-sm">
         <thead>
           <th>댓글 목록</th>
         </thead>
@@ -63,6 +66,7 @@
       <%}%>
     </div>
   </section>
+</div>
 <script>
   let reply_update =function (){
     if(!document.getElementById('reply_up').value){

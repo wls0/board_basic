@@ -1,38 +1,81 @@
-<title>Bootstrap Example</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../../public/stylesheets/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700&display=swap&subset=korean" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </head>
-  <body>
-    <a href="/">home</a>
-    <%if (session){%>
-    <form action="/users/logout?_method=DELETE" method="post">
-      <input type="submit" value="로그아웃">
-    </form>
-    <%}else{%>
-    <a href="/users/login">login</a>
-    <a href="/users/join">join</a>
-    <%}%>
-    <form action="/search" method="GET" name="frm_search">
-      <input type="text" class="form-control" id="search" name="search">
-      <div id="search_btn_wrap">
-        <button type="button" id="search_btn" onclick="search_start()">검색</button>
+<body>
+  <header id="header1">
+    <div class="layout">
+      <div class="logo_wrap">
+        <div class="logo">
+        <a href="/"><img src="../../public/images/logo.png"></a>
+        </div>
+      <div id="search_input_wrap">
+        <form action="/search" method="GET" name="frm_search">
+          <input type="text" id="search" name="search">
+          <div id="search_btn_wrap">
+            <button type="button" id="search_btn" onclick="search_start()" class="btn btn-dark">검색</button>
+          </div>
+        </form>
       </div>
-    </form>
-    <script>
-      let search_start = function () {
-        if(!document.getElementById('search').value){
-          alert('검색어을 작성해주세요.');
-          search.focus();
-          return;
-        }
-        frm_search.submit();
-      }
-    </script>
+    </div>
+  </header>
+  <header id="header2" class="bg-dark">
+    <div class="layout">
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark" id="top_nav"> 
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="/post">게시글</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/post_make">글쓰기</a>
+          </li>
+        </ul>
+      </nav>
+      <%if (session){%>
+        <div id="top_logout">
+          <form action="/users/logout?_method=DELETE" method="post" name="frm_logout">
+            <button type="button" onclick="logout()" class="btn btn-secondary">로그아웃</button>
+          </form>
+        </div>
+        <%}else{%>
+        <div id="top_login">
+          <div class="top_login_login">
+            <a class="nav-link" href="/users/login">Login</a>
+          </div>
+          <div class="top_login_sign">
+            <a class="nav-link" href="/users/join">Sign Up</a>
+          </div>
+        </div>
+        <%}%>
+    </div>
+  </header>
+
+<script>
+  let search_start = function () {
+    if(!document.getElementById('search').value){
+      alert('검색어을 작성해주세요.');
+      search.focus();
+      return;
+    }
+    frm_search.submit();
+  }
+  let logout =function(){
+    if(confirm("로그아웃 하시겠습니까?")){
+      frm_logout.submit();
+    }else{
+      return;
+    }
+  }
+</script>
 
 
 

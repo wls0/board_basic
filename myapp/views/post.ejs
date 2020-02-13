@@ -1,9 +1,10 @@
 <% include ./index/top.ejs%>
+<div class="layout">
 <section class="section1">
-  <table class="table table-bordered">
-  <form accept="/post_make" method="GET">
-    <button type="button" onclick="location.href='/post_make'" id="make_post_btn">글쓰기</button>
-  </form>
+  <div class="board_list_wrap">
+    <a>게시글 목록</a>
+  </div>
+  <table class="table table-bordered ">
   <div class="container">
     <thead>
       <th>글</th>
@@ -26,11 +27,5 @@
   </table>
   </div>
 </section>
-<!-- <script type="text/JavaScript">
-  let make_post =function () {
-    if(!session){
-      alert('로그인을 해주세요');
-    }
-  }
-</script> -->
+</div>
 <% include ./index/foot.ejs%>
