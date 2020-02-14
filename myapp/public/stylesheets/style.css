@@ -1,6 +1,9 @@
 a {
   color: black;
 }
+button {
+  border:none
+}
 tbody tr td a{
   color:#343a40;
 }   
@@ -87,8 +90,14 @@ tbody tr td a{
   font-size: 40px;
   font-weight: bold;
 }
- 
+.board_form_wrap{
+  margin-top: 40px;
+}
+.list_padding tr td{
+  padding: 20px;
+}
 
+/* post_board */
 #post_wrap #post_title{
   padding-top: 25px;
   display: block;
@@ -121,16 +130,211 @@ tbody tr td a{
 #post_board_btn_wrap{
   display: block;
   text-align: center;
+  margin-bottom: 100px;
 }
 #post_board_btn_wrap #post_update_btn_wrap{
   display: inline-block;
 }
 #post_board_btn_wrap #post_update_btn_wrap #post_update_btn{
-
+  color: #fff;
+  background-color: #ff3f0a;
+  border-color: #ff3f0a;
 }
 #post_board_btn_wrap #post_delete_btn_wrap{
   display: inline-block;
 }
 #post_board_btn_wrap #post_delete_btn_wrap #post_delete_btn{
+  color: #fff;
+  background-color: #343a40;
+  border-color: #343a40;
+}
+#reply_date{
+  display: inline-block;
+  float: right;
+  padding-right: 10px;
+  border-right: 1px #ced4da solid;
+}
+#reply_update_btn{
+  display: inline-block;
+  float: right;
+  margin-right: 10px;
+  border-right: 1px #ced4da solid;
+  margin-left: 6px;
+  border-radius: 2px;
+}
+#reply_update_btn input{
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 2px;
+} 
+#reply_update_btn button{
+  color: #fff;
+  background-color: #ff3f0a;
+  border-color: #ff3f0a;
+  border-radius: 2px;
+}
+#reply_delete_btn{
+  display: inline-block;
+  float: right;
+  border-radius: 2px;
+}
+#reply_delete_btn button{
+  color: #fff;
+  background-color: #343a40;
+  border: 1px solid #343a40;
+  border-radius: 2px;
+}
+#create_reply_wrap{
+  margin-top: 80px;
+  display: inline-block;
+  width: 1020px;
+}
+#create_reply_wrap input{
+  width: 100%;
+  height: 40px;
+  border-radius: 2px;
+}
+#create_reply_btn_wrap{
+  display: inline-block;
+  width: 115px;
+}
+#create_reply_btn_wrap #create_reply_btn{
+  width: 100%;
+  color: #fff;
+  background-color: #ff3f0a;
+  border-color: #ff3f0a;
+  border-radius: 2px;
+  height: 41px;
+}
 
+/* post_update */
+#update_btn_wrap_wrap{
+text-align: center;
+margin-top: 70px;
+}
+#update_btn_wrap{
+  display: inline-block;
+}
+#update_btn_wrap #update_btn{
+  color: #fff;
+  background-color: #ff3f0a;
+  border-color: #ff3f0a;
+  border-radius: 2px;
+  height: 41px;
+}
+#update_back_btn_wrap{
+  display: inline-block;
+}
+#update_back_btn_wrap #update_back_btn{
+  color: #fff;
+  background-color: #343a40;
+  border-color: #343a40;
+  border-radius: 2px;
+  height: 41px;
+}
+
+/* post_make */
+#post_make_btn_wrap{
+  text-align: center;
+}
+
+#post_make_btn_wrap #post_make_btn{
+  color: #fff;
+  background-color: #ff3f0a;
+  border-color: #ff3f0a;
+  border-radius: 2px;
+  height: 41px;
+}
+
+/* join */
+#join_btn_wrap_wrap{
+  text-align: center;
+  margin-top: 40px;
+}
+#join_btn_wrap{
+  display: inline-block; 
+  background-color: #ff3f0a;
+  border-color: #ff3f0a;
+  border-radius: 2px;
+  height: 41px;
+}
+#join_btn_wrap button{
+  color: #fff;
+}
+#join_back_btn_wrap{
+  display: inline-block;
+  background-color: #343a40;
+  border-color: #343a40;
+  border-radius: 2px;
+  height: 41px;
+}
+#join_back_btn_wrap button{
+  color: #fff;
+}
+
+/* login */
+#login_btn_wrap_wrap{
+  text-align: center;
+  margin-top: 40px;
+}
+#login_btn_wrap_wrap button{
+  color: #fff;
+}
+#login_btn_wrap{
+  display: inline-block; 
+  background-color: #ff3f0a;
+  border-color: #ff3f0a;
+  border-radius: 2px;
+  height: 41px;
+}
+#login_btn_wrap button{
+  color: #fff;
+} 
+/* #login_join_btn_wrap{
+  display: inline-block; 
+  background-color: #ff3f0a;
+  border-color: #ff3f0a;
+  border-radius: 2px;
+  height: 41px;
+}
+#login_join_btn button{
+  color: #fff;
+} */
+#login_back_btn_wrap{
+  display: inline-block;
+  background-color: #343a40;
+  border-color: #343a40;
+  border-radius: 2px;
+  height: 41px;
+}
+#login_back_btn{
+  color: #fff;
+}
+
+/* login_check */
+#login_check_btn_wrap_wrap{
+  text-align: center;
+  margin-top: 40px;
+}
+#login_check_btn_wrap{
+  display: inline-block; 
+  background-color: #ff3f0a;
+  border-color: #ff3f0a;
+  border-radius: 2px;
+  height: 41px;
+}
+#login_check_btn{
+  color: #fff;
+}
+#login_check_join_btn_wrap{
+  display: inline-block;
+  background-color: #343a40;
+  border-color: #343a40;
+  border-radius: 2px;
+  height: 41px;
+}
+#login_check_join_btn{
+  color: #fff;
 }

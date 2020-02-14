@@ -1,19 +1,25 @@
 <% include ./index/top.ejs%>
 <section class="section1">
+  <div class="board_list_wrap">
+    <a>게시글 작성</a>
+  </div>
+  <div class="board_form_wrap">
   <form action="/post_make" method="POST" name="post_make_frm">
   <div class="form-group">
-    <label for="title">title:</label>
+    <label for="title">제목:</label>
     <input type="text" class="form-control" id="title" name="title">
   </div>
   <div class="form-group">
-    <label for="comment">Comment:</label>
+    <label for="comment">내용:</label>
     <textarea class="form-control" rows="5" id="description" name="description"></textarea>
   </div>
   <div id ="post_make_btn_wrap">
-    <button type="button" class="btn btn-primary" onclick="post_make()" id="post_make_btn">생성</button>
+    <button type="button" class="btn" onclick="post_make()" id="post_make_btn">생성</button>
   </div>  
   </form>
+  </div>
 </section>
+</div>
 <script type="text/JavaScript">
   let post_make = function() {
     if(!document.getElementById('title').value){

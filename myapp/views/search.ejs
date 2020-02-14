@@ -1,14 +1,17 @@
 <% include ./index/top.ejs%>
 <section class="section1">
-  <table class="table table-bordered">
-  <a href="/post_make">글쓰기</a>
+  <div class="board_list_wrap">
+    <a>게시글 목록</a>
+  </div>
+<div class="board_form_wrap">
+  <table class="table table-bordered ">
   <div class="container">
     <thead>
       <th>글</th>
       <th>작성자</th>
       <th>작성일</th>
     </thead>
-    <tbody>
+    <tbody class="list_padding">
       <%if(search[0] === undefined){%>
         <td colspan="3" class="non_text">데이터가 없습니다.</td>
       <%}else if(!search.id){%>
@@ -22,6 +25,8 @@
         </tr>
     </tbody>
   </table>
+</div>
   </div>
 </section>
+</div>
 <% include ./index/foot.ejs%>

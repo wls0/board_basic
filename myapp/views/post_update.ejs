@@ -1,22 +1,31 @@
 <% include ./index/top.ejs%>
-<section class="section1">
-  <h2>게시글을 수정해주세요</h2>
+< class="section1">
+  <div class="board_list_wrap">
+    <a>수정하기</a>
+  </div>
+  <div class="board_form_wrap">
   <form action="/post_update/<%=post.id%>?_method=PUT" method="post">  
     <div id="update_title">
-      <input type="text" name="title" id="update_title" class="create_title" value="<%=post.title%>">
+      <label for="title">제목:</label>
+      <input type="text" name="title" id="update_title" class="form-control" value="<%=post.title%>">
     </div>
     <div id="update_user">
-      <input type="text" name="writer" id="update_writer" class="create_user" value="<%=post.user%>" disabled>
+      <label for="user">작성자:</label>
+      <input type="text" name="writer" id="update_writer" class="form-control" value="<%=post.user%>" disabled>
     </div>
     <div id="update_description">
-      <textarea cols="100" name="description" id="update_description" class="content" ><%=post.description%></textarea>
+      <label for="comment">내용:</label>
+      <textarea cols="100" name="description" id="update_description" class="form-control" rows="5" ><%=post.description%></textarea>
     </div>
-    <div id="update_btn_wrap">
-      <button type="submit" id="update_btn">글 수정</button>
-    </div>
-    <div id="update_back_btn_wrap">
-      <button type="button" onclick="location.href='/post/<%=post.id%>'" id="update_back_btn">돌아가기</button>
+    <div id="update_btn_wrap_wrap">
+      <div id="update_btn_wrap">
+        <button type="submit" id="update_btn">글 수정</button>
+      </div>
+      <div id="update_back_btn_wrap">
+        <button type="button" onclick="location.href='/post/<%=post.id%>'" id="update_back_btn">돌아가기</button>
+      </div>
     </div>
   </form>
+</div>
 </section>
 <% include ./index/foot.ejs%>

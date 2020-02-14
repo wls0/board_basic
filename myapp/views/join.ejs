@@ -1,26 +1,34 @@
 <% include ./index/top.ejs%>
 <section class="section1">
-  <form action="/users/join" method="POST" name="frm_join">
-    <div class="form-group">
-      <label>id:</label>
-      <input type="text" class="form-control" id="id" name="id">
-    </div>
-    <div class="form-group">
-      <label>password:</label>
-      <input type="password" class="form-control" id="password" name="password">
-    </div>
-    <div class="form-group">
-      <label>username:</label>
-      <input type="text" class="form-control" id="username" name="username">
-    </div>
-    <div id ="join_btn_wrap">
-      <button type="submit" id="join_btn" onclick="join()">회원가입</button>
-    </div>
-    <div id ="join_back_btn_wrap">
-      <button type="button" onclick="location.href='/'" id="join_back_btn">돌아가기</button>
-    </div>
-  </form>
+  <div class="board_list_wrap">
+    <a>회원가입</a>
+  </div>
+  <div class="board_form_wrap">
+    <form action="/users/join" method="POST" name="frm_join">
+      <div class="form-group">
+        <label>id:</label>
+        <input type="text" class="form-control" id="id" name="id">
+      </div>
+      <div class="form-group">
+        <label>password:</label>
+        <input type="password" class="form-control" id="password" name="password">
+      </div>
+      <div class="form-group">
+        <label>username:</label>
+        <input type="text" class="form-control" id="username" name="username">
+      </div>
+      <div id="join_btn_wrap_wrap">
+        <div id ="join_btn_wrap">
+          <button type="submit" id="join_btn" onclick="join()" class="btn">회원가입</button>
+        </div>
+        <div id ="join_back_btn_wrap">
+          <button type="button" onclick="location.href='/'" id="join_back_btn" class="btn">돌아가기</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </section>
+</div>
 <script>
   let join = function () {
     if(!document.getElementById('id').value){

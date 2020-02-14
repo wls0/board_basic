@@ -1,5 +1,4 @@
 <% include ./index/top.ejs%>
-<div class="layout">
   <section class="section1">
     <div id="post_wrap">
       <div id="post_title">
@@ -27,37 +26,38 @@
     <%}%>
       <table class="table table-bordered table-sm">
         <thead>
-          <th>댓글 목록</th>
+          <th colspan="3" class="non_text">댓글 목록</th>
         </thead>
-        <tbody>
+        <tbody class="list_padding">
           <% for(let j=0; j<reply.length; j++) {%>
           <tr>
             <td><%=reply[j].data.user%></td>
             <td><%=reply[j].data.reply%></td>
-            <td><%=reply[j].date%>
-            <div id="reply_update_btn">
-              <form action="/reply_update/<%=reply[j].data.id%>?_method=put" method="POST" name="frm_reply_update">
-                <input type="text" name="reply_up" id="reply_up">
-                <button type="button"" id="reply_update_btn" onclick="reply_update()">수정</button>
-              </form>
-            </div>
-            <div id="reply_delete_btn">
-              <form action="/reply_delete/<%=reply[j].data.id%>?_method=DELETE" method="POST">
-                <button type="submit" id="reply_delete_btn">삭제</button>
-              </form>
-            </div>
+            <td>
+              <div id="reply_delete_btn">
+                <form action="/reply_delete/<%=reply[j].data.id%>?_method=DELETE" method="POST">
+                  <button type="submit" id="reply_delete_btn">삭제</button>
+                </form>
+              </div>
+              <div id="reply_update_btn">
+                <form action="/reply_update/<%=reply[j].data.id%>?_method=put" method="POST" name="frm_reply_update">
+                  <input type="text" name="reply_up" id="reply_up">
+                  <button type="button"" id="reply_update_btn" onclick="reply_update()">수정</button>
+                </form>
+              </div>
+              <div id="reply_date">
+                <%=reply[j].date%>
+              </div>
             </td>
           </tr>
           <%}%>
         </tbody>
       </table>
-      <!-- 로그인을 하지않았을땐 댓글작성이 안되도록 -->
     <% for(let i=0; i<post.length; i++) {%>
       <form action="/reply/<%=post[i].data.id%>" method="POST" name="frm_reply_make">
-          <!-- 로그인을 하지않으면  로그인를 하라는 입력창이 출력되게 만들기-->
           <input type="hidden" name="reply_user" value="<%=post[i].login_user%>">
-        <div id="create_reply_wrap">
-          <input type="text" name="reply" id="reply" placeholder="댓글을 작성해주세여">
+        <div id="create_reply_wrap" >
+          <input type="text" name="reply" id="reply"class="form-control" placeholder="댓글을 작성해주세요">
         </div>
         <div id="create_reply_btn_wrap">
           <button type="button" id="create_reply_btn" onclick="reply_make()">댓글작성</button>
