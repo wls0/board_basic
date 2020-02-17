@@ -269,24 +269,26 @@ margin-top: 70px;
   margin-top: 40px;
 }
 #join_btn_wrap{
-  display: inline-block; 
+  display: inline-block;
   background-color: #ff3f0a;
   border-color: #ff3f0a;
   border-radius: 2px;
-  height: 41px;
+  height: 40px;
 }
 #join_btn_wrap button{
   color: #fff;
+  padding-top: 8px;
 }
 #join_back_btn_wrap{
   display: inline-block;
   background-color: #343a40;
   border-color: #343a40;
   border-radius: 2px;
-  height: 41px;
+  height: 40px;
 }
 #join_back_btn_wrap button{
   color: #fff;
+  padding-top: 8px;
 }
 
 /* login */
@@ -298,14 +300,15 @@ margin-top: 70px;
   color: #fff;
 }
 #login_btn_wrap{
-  display: inline-block; 
+  display: inline-block;
   background-color: #ff3f0a;
   border-color: #ff3f0a;
   border-radius: 2px;
-  height: 41px;
+  height: 40px;
 }
 #login_btn_wrap button{
   color: #fff;
+  padding-top: 8px;
 } 
 /* #login_join_btn_wrap{
   display: inline-block; 
@@ -322,10 +325,11 @@ margin-top: 70px;
   background-color: #343a40;
   border-color: #343a40;
   border-radius: 2px;
-  height: 41px;
+  height: 40px;
 }
 #login_back_btn{
   color: #fff;
+  padding-top: 8px;
 }
 
 /* login_check */

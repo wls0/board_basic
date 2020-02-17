@@ -37,6 +37,37 @@ router.get('/', function(req, res, next) {
 });
 
 //게시글 페이지
+// router.get('/post/:page', function(req, res, next) {
+//   let session = req.session.uid;
+//   let page_num = req.params.page;
+//   console.log(page_num);
+//   let offset = 0;
+//   if(page_num > 1){
+//     offset =5 * (page_num -1);
+//   }
+//   console.log(offset);
+//   models.post.findAll({
+//     offset:offset,
+//     limit:6
+//   }).then(result=>{
+//     let post = function(){
+//       let posts=[];
+//       for(let i =0; i<result.length; i++){
+//         let date=moment(result[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
+//         posts.push({
+//           data:result[i],
+//           date:date
+//         });
+//       }
+//       return posts;
+//     }
+//     res.render("post",{
+//       post:post().reverse(),
+//       session:session
+//     });
+//   })
+// });
+
 router.get('/post/:page', function(req, res, next) {
   let session = req.session.uid;
   let page_num = req.params.page;
@@ -50,23 +81,29 @@ router.get('/post/:page', function(req, res, next) {
     offset:offset,
     limit:6
   }).then(result=>{
-    let post = function(){
-      let posts=[];
-      for(let i =0; i<result.length; i++){
-        let date=moment(result[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
-        posts.push({
-          data:result[i],
-          date:date
-        });
+    models.post.count().then(c=>{
+      console.log();
+      let post = function(){
+        let posts=[];
+        for(let i =0; i<result.length; i++){
+          let date=moment(result[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
+          posts.push({
+            data:result[i],
+            date:date
+          });
+        }
+        return posts;
       }
-      return posts;
-    }
-    res.render("post",{
-      post:post().reverse(),
-      session:session
-    });
+      res.render("post",{
+        post:post().reverse(),
+        session:session,
+        count:c
+      });
+    })
   })
 });
+
+
 
 //글 생성 페이지 이동 
 router.get('/post_make', function(req, res, next) {
