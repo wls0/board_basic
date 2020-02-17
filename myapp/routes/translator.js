@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var client_id = 'hlOJ1di6yot7rckQmOj8';
-var client_secret = 'UUeSsoCxs7';
+var client_id = 'null';
+var client_secret = 'null';
 var request = require('request');
 
 router.get('/', function(req, res, next) {
