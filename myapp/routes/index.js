@@ -35,10 +35,21 @@ router.get('/', function(req, res, next) {
     session:session
   });
 });
+
 //게시글 페이지
-router.get('/post', function(req, res, next) {
-  let session =req.session.uid;
-  models.post.findAll().then(result=>{
+router.get('/post/:page', function(req, res, next) {
+  let session = req.session.uid;
+  let page_num = req.params.page;
+  console.log(page_num);
+  let offset = 0;
+  if(page_num > 1){
+    offset =5 * (page_num -1);
+  }
+  console.log(offset);
+  models.post.findAll({
+    offset:offset,
+    limit:6
+  }).then(result=>{
     let post = function(){
       let posts=[];
       for(let i =0; i<result.length; i++){
@@ -51,7 +62,7 @@ router.get('/post', function(req, res, next) {
       return posts;
     }
     res.render("post",{
-      post:post(),
+      post:post().reverse(),
       session:session
     });
   })
@@ -72,7 +83,7 @@ router.get('/post_make', function(req, res, next) {
 });
 
 // 글 상세 페이지 이동
-router.get('/post/:id',function(req, res, next) {
+router.get('/post/page/:id',function(req, res, next) {
   let session =req.session.uid;
   let id = req.params.id;
   let login_user = req.session.uid;
@@ -359,7 +370,7 @@ router.post('/post_make', function(req, res, next) {
   })
   .then(result=>{
     console.log("글 추가 완료");
-    res.redirect("/post");
+    res.redirect('/post/:1');
   })
   .catch(err=>{
     console.log("글 추가 실패"+err);

@@ -8,7 +8,7 @@ var compression = require('compression')
 var models =require('./models');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+var translatorRouter= require('./routes/translator'); 
 models.sequelize.sync().then( () => {
   console.log(" DB 연결 성공");
 }).catch(err => {
@@ -32,6 +32,7 @@ app.use('/public',express.static('public'));
 app.use(methodOverride('_method'));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/translator',translatorRouter);
 
 
 // catch 404 and forward to error handler

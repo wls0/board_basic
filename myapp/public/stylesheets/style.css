@@ -1,8 +1,15 @@
+* {
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: -0.5px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
 a {
   color: black;
 }
 button {
-  border:none
+  border:none;
 }
 tbody tr td a{
   color:#343a40;
@@ -26,6 +33,9 @@ tbody tr td a{
   width: 100%;
   height: 70px;
   padding-top: 20px;
+}
+.navbar-wrap{
+  padding:10px 0;
 }
 #search_input_wrap{
   display: inline-block;
@@ -59,11 +69,11 @@ tbody tr td a{
 
 #header2 #top_nav{
   display: inline-block;
+  padding: 0;
 }
 #header2 #top_login{
   display: inline-block;
   float: right;
-  margin-top: 6px;
 }
 #header2 #top_login a{
   color: #fff;
@@ -78,23 +88,26 @@ tbody tr td a{
 #header2 #top_logout{
   display: inline-block;
   float: right;
-  margin-top: 8px;
 }
-
 
 .board_list_wrap{
-  border-bottom: 3px #343a40 solid;
-  padding-top: 20px;
+  display: inline-block;
+  padding: 30px 0;
+  width: 100%;
 }
 .board_list_wrap a{
-  font-size: 40px;
+  font-size: 28px;
+  line-height: 36px;
   font-weight: bold;
 }
-.board_form_wrap{
-  margin-top: 40px;
-}
+
 .list_padding tr td{
   padding: 20px;
+}
+
+/* post */
+#post_page_wrap{
+  text-align: center;
 }
 
 /* post_board */
@@ -139,6 +152,7 @@ tbody tr td a{
   color: #fff;
   background-color: #ff3f0a;
   border-color: #ff3f0a;
+  border-radius: 2px;
 }
 #post_board_btn_wrap #post_delete_btn_wrap{
   display: inline-block;
@@ -147,6 +161,7 @@ tbody tr td a{
   color: #fff;
   background-color: #343a40;
   border-color: #343a40;
+  border-radius: 2px;
 }
 #reply_date{
   display: inline-block;
@@ -337,4 +352,28 @@ margin-top: 70px;
 }
 #login_check_join_btn{
   color: #fff;
+}
+
+
+/* section */
+.section1 {
+  padding: 40px 0;
+}
+
+
+/* footer */
+
+#footer {
+  background: #eee;
+  padding: 40px 0;
+}
+.footer-text {
+  color: #666;
+}
+.copyright {
+  font-size: 12px;
+  line-height: 20px;
+  color: #999;
+  letter-spacing: 0;
+  padding-top: 10px;
 }

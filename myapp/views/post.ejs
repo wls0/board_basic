@@ -17,7 +17,7 @@
       <%}else if(!post.id){%>
       <% for(let i=0; i<post.length; i++) { %>
         <tr>
-          <td><a href="/post/<%=post[i].data.id%>"><%= post[i].data.title %></a></td>
+          <td><a href="/post/page/<%=post[i].data.id%>"><%= post[i].data.title %></a></td>
           <td><%= post[i].data.user %></td>
           <td><%=post[i].date%></td>
           <%}%>
@@ -27,6 +27,14 @@
   </table>
 </div>
   </div>
+  <!-- <div id="post_page_wrap">
+    <ul class="pagination">
+      
+      
+    
+      
+    </ul>
+  </div> -->
 </section>
 </div>
 <% include ./index/foot.ejs%>
