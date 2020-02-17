@@ -342,6 +342,7 @@ margin-top: 70px;
 }
 #login_check_btn{
   color: #fff;
+  padding-top: 9px;
 }
 #login_check_join_btn_wrap{
   display: inline-block;
@@ -352,8 +353,19 @@ margin-top: 70px;
 }
 #login_check_join_btn{
   color: #fff;
+  padding-top: 9px;
 }
-
+/* translator */
+#translator_btn_wrap{
+  display: block;
+  text-align: end;
+  margin: 10px 0;
+}
+#translator_btn{
+  text-align: center;
+  background-color: #ff3f0a;
+  color: #fff;
+}
 
 /* section */
 .section1 {
