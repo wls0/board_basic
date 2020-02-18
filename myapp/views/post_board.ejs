@@ -54,15 +54,15 @@
         </tbody>
       </table>
     <% for(let i=0; i<post.length; i++) {%>
-      <form action="/reply/<%=post[i].data.id%>" method="POST" name="frm_reply_make">
-          <input type="hidden" name="reply_user" value="<%=post[i].login_user%>">
+        <form action="/reply/<%=post[i].data.id%>" method="POST" name="frm_reply_make">
+            <input type="hidden" name="reply_user" value="<%=post[i].login_user%>">
         <div id="create_reply_wrap" >
           <input type="text" name="reply" id="reply"class="form-control" placeholder="댓글을 작성해주세요">
         </div>
         <div id="create_reply_btn_wrap">
           <button type="button" id="create_reply_btn" onclick="reply_make()">댓글작성</button>
         </div>
-      </form>
+        </form>
       <%}%>
     </div>
   </section>

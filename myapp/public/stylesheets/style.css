@@ -13,6 +13,10 @@ button {
 }
 tbody tr td a{
   color:#343a40;
+}
+/* section */
+.section1 {
+  padding: 40px 0;
 }   
 .layout{
   width: 1140px;
@@ -66,7 +70,6 @@ tbody tr td a{
   border-radius: 2px;
 }
 
-
 #header2 #top_nav{
   display: inline-block;
   padding: 0;
@@ -105,9 +108,36 @@ tbody tr td a{
   padding: 20px;
 }
 
-/* post */
-#post_page_wrap{
+/* index */
+#home_btn_wrap_wrap{
   text-align: center;
+}
+#home_post_btn_wrap{
+  display: inline-block;
+  
+}
+#home_post_btn_wrap button{
+  background-color: #343a40;
+  color: #fff;
+}
+#home_translator_btn_wrap{
+  display: inline-block;
+}
+#home_translator_btn_wrap button{
+  background-color: #343a40;
+  color: #fff;
+}
+/* post */
+#post_page_wrap_wrap{
+  text-align: center;
+}
+
+#post_page_wrap{
+  display: inline-block;
+}
+
+#post_page_wrap a{
+  color: #343a40;
 }
 
 /* post_board */
@@ -221,7 +251,7 @@ tbody tr td a{
   background-color: #ff3f0a;
   border-color: #ff3f0a;
   border-radius: 2px;
-  height: 41px;
+  height: 40px;
 }
 
 /* post_update */
@@ -371,10 +401,7 @@ margin-top: 70px;
   color: #fff;
 }
 
-/* section */
-.section1 {
-  padding: 40px 0;
-}
+
 
 
 /* footer */
@@ -392,4 +419,62 @@ margin-top: 70px;
   color: #999;
   letter-spacing: 0;
   padding-top: 10px;
+}
+
+@media screen and (max-width: 1280px){
+  .layout{
+    width: 90%;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .logo_wrap {
+    margin-top: 30px;
+    margin-left: 80px;
+    margin-bottom: 30px;
+}
+  #search_input_wrap #search {
+    display: inline-block;
+    height: 10px;
+    width: 420px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 2px;
+}
+#search_btn_wrap #search_btn {
+  height: 41px;
+  margin-top: 14px;
+  background-color: #ff3f0a;
+  border-color: #ff3f0a;
+  border-radius: 2px;
+}
+#create_reply_wrap {
+  margin-top: 80px;
+  display: inline-block;
+  width: 803px;
+}
+}
+
+@media screen and (max-width: ‭640px){
+  #search_input_wrap #search {
+    display: inline-block;
+    height: 10px;
+    width: 220px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 2px;
+  }
 }

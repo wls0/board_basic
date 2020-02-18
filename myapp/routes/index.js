@@ -71,33 +71,34 @@ router.get('/', function(req, res, next) {
 router.get('/post/:page', function(req, res, next) {
   let session = req.session.uid;
   let page_num = req.params.page;
-  console.log(page_num);
+  // console.log(page_num);
   let offset = 0;
   if(page_num > 1){
     offset =5 * (page_num -1);
   }
-  console.log(offset);
+  models.post.count().then(count=>{
+  // console.log(offset);
   models.post.findAll({
     offset:offset,
     limit:6
   }).then(result=>{
-    models.post.count().then(c=>{
-      console.log();
-      let post = function(){
-        let posts=[];
-        for(let i =0; i<result.length; i++){
-          let date=moment(result[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
-          posts.push({
-            data:result[i],
-            date:date
-          });
-        }
-        return posts;
+    let post = function(){
+      let posts=[];
+      for(let i =0; i<result.length; i++){
+        let date=moment(result[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
+        posts.push({
+          data:result[i],
+          date:date
+        });
       }
+      return posts;
+    }
+      let count_out = Math.ceil(count/6)+1;
+      console.log(count_out + 1);
       res.render("post",{
         post:post().reverse(),
         session:session,
-        count:c
+        count:count_out
       });
     })
   })
@@ -215,7 +216,7 @@ router.put('/post_update/:id', function(req, res, next) {
     })
     .then(result2 =>{
       console.log("수정완료");
-      res.redirect('/post/'+id);
+      res.redirect('/post/page/'+id);
     })
   })
   .catch(err=>{

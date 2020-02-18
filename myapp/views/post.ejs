@@ -27,17 +27,14 @@
   </table>
 </div>
   </div>
-  <div id="post_page_wrap">
-    <ul class="pagination">
-      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-      
-      <% for(let j=1; j<count.lenght; j++) {%>
-      
-      <li class="page-item"><a class="page-link" href="/post/">1</a></li>
-      <%}%>
-     
-      <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
+  <div id="post_page_wrap_wrap">
+    <div id="post_page_wrap">
+      <ul class="pagination">
+        <%for(let j=1; j<count; j++) {%>
+        <li class="page-item"><a class="page-link" href="/post/<%=j%>"><%=j%></a></li>     
+        <%}%>
+      </ul>
+    </div>
   </div>
 </section>
 </div>
