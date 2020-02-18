@@ -84,6 +84,7 @@ router.get('/post/:page', function(req, res, next) {
   }).then(result=>{
     let post = function(){
       let posts=[];
+      result.reverse();
       for(let i =0; i<result.length; i++){
         let date=moment(result[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
         posts.push({
@@ -96,7 +97,7 @@ router.get('/post/:page', function(req, res, next) {
       let count_out = Math.ceil(count/6)+1;
       console.log(count_out + 1);
       res.render("post",{
-        post:post().reverse(),
+        post:post(),
         session:session,
         count:count_out
       });
@@ -246,7 +247,7 @@ router.delete('/post_delete/:id', function(req, res, next) {
           console.log("글 댓글 삭제");
         })
         console.log("글 삭제");
-        res.redirect('/');
+        res.redirect('/post/1');
       })
     }else if(!session){
       console.log("비로그인");
@@ -384,7 +385,7 @@ router.post("/reply/:id", function(req, res, next) {
     })
     .then(result =>{
       console.log("댓글 작성 완료");
-      res.redirect('/post/'+id);
+      res.redirect('/post/page/'+id);
     })
     .catch(err=>{
       console.log(err+"댓글 작성 실패");

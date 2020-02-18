@@ -461,9 +461,10 @@ margin-top: 70px;
 }
 }
 
-@media screen and (max-width: ‭640px){
-  #search_input_wrap #search {
-    display: inline-block;
+
+@media screen and (max-width: 640px){
+  #search_input_wrap #search{
+    display: none;
     height: 10px;
     width: 220px;
     padding-top: 10px;
@@ -477,4 +478,16 @@ margin-top: 70px;
     border: 1px solid #ced4da;
     border-radius: 2px;
   }
+#search_btn_wrap #search_btn {
+  height: 41px;
+  margin-top: 14px;
+  background-color: #ff3f0a;
+  border-color: #ff3f0a;
+  border-radius: 2px;
+}
+#create_reply_wrap {
+  margin-top: 80px;
+  display: inline-block;
+  width: 803px;
+}
 }

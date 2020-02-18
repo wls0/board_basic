@@ -44,7 +44,7 @@ router.post('/join', function(req, res, next) {
   })
   .then(result=>{
     console.log("회원가입 성공");
-    res.redirect("/users/join");
+    res.redirect("/users/login");
   })
   .catch(err=>{
     console.log("회원가입 실패"+err);

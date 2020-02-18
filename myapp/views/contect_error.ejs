@@ -1,5 +1,19 @@
 <% include ./index/top.ejs%>
-  <a href="/post">게시물</a>
+<section class="section1">
+  <div class="board_list_wrap">
+  </div>
+  <div id="home_btn_wrap_wrap"> 
+    <div id="home_post_btn_wrap">
+      <button type="submit" onclick="location.href='/post/1'" class="btn">게시글</button>
+    </div>
+    <div id="home_translator_btn_wrap">
+      <button type="submit" onclick="location.href='/'" class="btn">홈으로</button>
+    </div>
+    <!-- home_translator_btn_wrap 디자인이 적용안될시 새로만들어서 변경해줘야함 -->
+  </div>
+</section>
+</div>
+
 <script>  
   alert('<%=message%>');
 </script>
