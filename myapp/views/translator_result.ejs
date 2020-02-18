@@ -1,20 +1,22 @@
 <% include ./index/top.ejs%>
-  <section>
+  <section class="section1">
     <div class="board_list_wrap">
       <a>번역기</a>
     </div>
     <div class="board_form_wrap">
       <div id="tanslator_input_wrap">
+        <label for="kor">한글:</label>
         <form action="/translator/result" method="get" name="frm_translator">
-          <textarea name="translator">
-            
+          <textarea name="translator" class="form-control" rows="5">
           </textarea>
-          <button type="submit" > 번역</button>
-        </form>
+          <div id="translator_btn_wrap">
+            <button type="submit" id="translator_btn" class="btn">번역하기</button>
+          </div>
+          </form>
       </div>
       <div id="tanslator_result_wrap">
-        <textarea name="translator_result">
-          <%=result%>
+        <label for="en">결과:</label>
+        <textarea name="translator_result" class="form-control" rows="5"><%=result%>
         </textarea>
       </div>
     </div>

@@ -1,8 +1,5 @@
 <% include ./index/top.ejs%>
 <section class="section1">
-  <script type="text/javascript">
-    alert("<%= message%>");
-  </script>
   <div class="board_list_wrap">
     <a>로그인</a>
   </div>
@@ -42,5 +39,6 @@
     }
     frm_login.submit();
   }
+  alert("<%= message%>");
 </script>
 <% include ./index/foot.ejs%>
