@@ -24,9 +24,9 @@
       </div>
     </div>
     <%}%>
-      <table class="table table-bordered table-sm">
+      <table class="table table-bordered table-sm" id="board_table">
         <thead>
-          <th colspan="3" class="non_text">댓글 목록</th>
+          <th colspan="5" class="non_text">댓글 목록</th>
         </thead>
         <tbody class="list_padding">
           <% for(let j=0; j<reply.length; j++) {%>
@@ -34,19 +34,27 @@
             <td><%=reply[j].data.user%></td>
             <td><%=reply[j].data.reply%></td>
             <td>
+              <div id="reply_date">
+                <%=reply[j].date%>
+              </div>
+            </td>
+            <td>
+              <div id="reply_btn_wrap">
+                <form action="/reply_update/<%=reply[j].data.id%>?_method=put" method="POST" name="frm_reply_update">
+                  <div id="reply_update_btn">
+                    <button type="button" id="reply_update_btn" onclick="reply_update()">수정</button>
+                  </div>
+                  <div id="reply_update_input">
+                    <input type="text" name="reply_up" id="reply_up">
+                  </div>   
+                </form>
+              </div>
+            </td>
+            <td>
               <div id="reply_delete_btn">
                 <form action="/reply_delete/<%=reply[j].data.id%>?_method=DELETE" method="POST">
                   <button type="submit" id="reply_delete_btn">삭제</button>
                 </form>
-              </div>
-              <div id="reply_update_btn">
-                <form action="/reply_update/<%=reply[j].data.id%>?_method=put" method="POST" name="frm_reply_update">
-                  <input type="text" name="reply_up" id="reply_up">
-                  <button type="button"" id="reply_update_btn" onclick="reply_update()">수정</button>
-                </form>
-              </div>
-              <div id="reply_date">
-                <%=reply[j].date%>
               </div>
             </td>
           </tr>
@@ -68,7 +76,7 @@
   </section>
 </div>
 <script>
-  let reply_update =function (){
+  let reply_update = function (){
     if(!document.getElementById('reply_up').value){
       alert('수정댓글을 작성해주세요.');
       reply_up.focus();

@@ -4,7 +4,6 @@
   letter-spacing: -0.5px;
   font-family: 'Noto Sans KR', sans-serif;
 }
-
 a {
   color: black;
 }
@@ -195,17 +194,17 @@ tbody tr td a{
 }
 #reply_date{
   display: inline-block;
-  float: right;
-  padding-right: 10px;
-  border-right: 1px #ced4da solid;
+  float: left;
+}
+#reply_update_input{
+  display: inline-block;
 }
 #reply_update_btn{
   display: inline-block;
-  float: right;
-  margin-right: 10px;
-  border-right: 1px #ced4da solid;
+  float: left;
   margin-left: 6px;
   border-radius: 2px;
+  padding-bottom: 3px;
 }
 #reply_update_btn input{
   color: #495057;
@@ -213,12 +212,16 @@ tbody tr td a{
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: 2px;
+}
+#reply_update_input #reply_up{
+  margin: 0 6px;
 } 
 #reply_update_btn button{
   color: #fff;
   background-color: #ff3f0a;
   border-color: #ff3f0a;
   border-radius: 2px;
+  padding-bottom: 4px;
 }
 #reply_delete_btn{
   display: inline-block;
@@ -230,6 +233,18 @@ tbody tr td a{
   background-color: #343a40;
   border: 1px solid #343a40;
   border-radius: 2px;
+}
+#board_table .list_padding tr >td:nth-child(1){
+  width: 60px;
+}
+#board_table .list_padding tr >td:nth-child(3){
+  width: 170px;
+}
+#board_table .list_padding tr >td:nth-child(4){
+  width: 300px;
+}
+#board_table .list_padding tr >td:nth-child(5){
+  width: 80px;
 }
 #create_reply_wrap{
   margin-top: 80px;
@@ -401,9 +416,6 @@ margin-top: 70px;
   color: #fff;
 }
 
-
-
-
 /* footer */
 
 #footer {
@@ -462,11 +474,45 @@ margin-top: 70px;
 }
 
 
-@media screen and (max-width: 640px){
-  #search_input_wrap #search{
+@media screen and (max-width: 425px){
+  tbody tr td a{
+    color:#343a40;
+  }
+  /* section */
+  .section1 {
+    padding: 40px 0;
+  }   
+  .layout{
+    width: 90%;
+    margin: 0 auto;
+    overflow: hidden;
+    text-align: center;
+  }
+  .logo_wrap{
+    margin-top: 30px;
+    display: inline-block;
+    margin-left: 15px;
+  }
+  .logo_wrap .logo{
+    display: inline-block;
+    margin-right: 20px;
+    width: 260px;
+  }
+  .logo img{
+    width: 100%;
+    height: 70px;
+    padding-top: 20px;
+  }
+  .navbar-wrap{
+    padding: 0px 0;
+  }
+  #search_input_wrap{
     display: none;
+  }
+  #search_input_wrap #search{
+    display: inline-block;
+    width: 500px;
     height: 10px;
-    width: 220px;
     padding-top: 10px;
     padding-bottom: 30px;
     font-size: 1rem;
@@ -478,16 +524,380 @@ margin-top: 70px;
     border: 1px solid #ced4da;
     border-radius: 2px;
   }
-#search_btn_wrap #search_btn {
-  height: 41px;
-  margin-top: 14px;
-  background-color: #ff3f0a;
-  border-color: #ff3f0a;
-  border-radius: 2px;
-}
-#create_reply_wrap {
-  margin-top: 80px;
-  display: inline-block;
-  width: 803px;
-}
+  #search_btn_wrap {
+    display: inline-block;
+  }
+  #search_btn_wrap #search_btn{
+    height: 40px;
+    margin-top: 14px;
+    background-color: #ff3f0a;
+    border-color: #ff3f0a;
+    border-radius: 2px;
+  }
+  
+  #header2 #top_nav{
+    display: none;
+    padding: 0;
+  }
+  #header2 #top_login{
+    display: inline-block;
+    float: right;
+  }
+  #header2 #top_login a{
+    color: #fff;
+  }
+  #header2 #top_login .top_login_login{
+    display: inline-block;
+  }
+  
+  #header2 #top_login .top_login_sign{
+    display: inline-block;
+  }
+  #header2 #top_logout{
+    display: inline-block;
+    float: right;
+  }
+  
+  .board_list_wrap{
+    display: inline-block;
+    padding: 30px 0;
+    width: 100%;
+  }
+  .board_list_wrap a{
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: bold;
+  }
+  
+  .list_padding tr td{
+    padding: 0px;
+  }
+  #board_table .list_padding tr >td:first-child{
+    width: 50px;
+  }
+  #board_table .list_padding tr >td:nth-child(2){
+    text-align: left;
+    padding-left: 8px;
+  }
+  #board_table .list_padding tr >td:nth-child(3){
+    display: none;
+  }
+  #board_table .list_padding tr >td:nth-child(4){
+    display: none;
+  }
+  #board_table .list_padding tr >td:nth-child(5){
+    width: 40px;
+  }
+  
+  /* index */
+  #home_btn_wrap_wrap{
+    text-align: center;
+  }
+  #home_post_btn_wrap{
+    display: inline-block;
+    
+  }
+  #home_post_btn_wrap button{
+    background-color: #343a40;
+    color: #fff;
+  }
+  #home_translator_btn_wrap{
+    display: inline-block;
+  }
+  #home_translator_btn_wrap button{
+    background-color: #343a40;
+    color: #fff;
+  }
+  /* post */
+  #post_page_wrap_wrap{
+    text-align: center;
+  }
+  
+  #post_page_wrap{
+    display: inline-block;
+  }
+  
+  #post_page_wrap a{
+    color: #343a40;
+  }
+  
+  /* post_board */
+  #post_wrap #post_title{
+    padding-top: 25px;
+    display: block;
+  }
+  #post_wrap #post_title a{
+    font-size: 24px;
+  }
+  #post_info{
+    border-bottom: 2px black solid;
+    font-size: 12px;
+  }
+  #post_info #post_user{
+    display: inline-block;
+    float: left;
+    border-right: 1px #ced4da solid;
+    padding-right: 16px;
+  }
+  #post_info #post_date{
+    display: inline-block;
+    padding-left: 16px;
+  }
+  #post_info #post_view{
+    display: inline-block;
+    float: right;
+  }
+  #post_content{
+    margin-top: 120px;
+    margin-bottom: 100px;
+  }
+  #post_board_btn_wrap{
+    display: block;
+    text-align: center;
+    margin-bottom: 100px;
+  }
+  #post_board_btn_wrap #post_update_btn_wrap{
+    display: inline-block;
+  }
+  #post_board_btn_wrap #post_update_btn_wrap #post_update_btn{
+    color: #fff;
+    background-color: #ff3f0a;
+    border-color: #ff3f0a;
+    border-radius: 2px;
+  }
+  #post_board_btn_wrap #post_delete_btn_wrap{
+    display: inline-block;
+  }
+  #post_board_btn_wrap #post_delete_btn_wrap #post_delete_btn{
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+    border-radius: 2px;
+  }
+  #reply_btn_wrap{
+    display: none;
+  }
+  #reply_date{
+    display: none;
+    float: right;
+    padding-right: 10px;
+    border-right: 1px #ced4da solid;
+  }
+  #reply_update_btn{
+    display: inline-block;
+    float: right;
+    margin-right: 10px;
+    border-right: 1px #ced4da solid;
+    margin-left: 6px;
+    border-radius: 2px;
+  }
+  #reply_update_btn input{
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 2px;
+  } 
+  #reply_update_btn button{
+    color: #fff;
+    background-color: #ff3f0a;
+    border-color: #ff3f0a;
+    border-radius: 2px;
+  }
+  #reply_delete_btn{
+    display: inline-block;
+    float: right;
+    border-radius: 2px;
+  }
+  #reply_delete_btn button{
+    color: #fff;
+    background-color: #343a40;
+    border: 1px solid #343a40;
+    border-radius: 2px;
+  }
+  #create_reply_wrap{
+    margin-top: 80px;
+    display: inline-block;
+    width: 260px;
+  }
+  #create_reply_wrap input{
+    width: 100%;
+    height: 40px;
+    border-radius: 2px;
+  }
+  #create_reply_btn_wrap{
+    display: inline-block;
+    width: 115px;
+  }
+  #create_reply_btn_wrap #create_reply_btn{
+    width: 100%;
+    color: #fff;
+    background-color: #ff3f0a;
+    border-color: #ff3f0a;
+    border-radius: 2px;
+    height: 40px;
+  }
+  
+  /* post_update */
+  #update_btn_wrap_wrap{
+  text-align: center;
+  margin-top: 70px;
+  }
+  #update_btn_wrap{
+    display: inline-block;
+  }
+  #update_btn_wrap #update_btn{
+    color: #fff;
+    background-color: #ff3f0a;
+    border-color: #ff3f0a;
+    border-radius: 2px;
+    height: 41px;
+  }
+  #update_back_btn_wrap{
+    display: inline-block;
+  }
+  #update_back_btn_wrap #update_back_btn{
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+    border-radius: 2px;
+    height: 41px;
+  }
+  
+  /* post_make */
+  #post_make_btn_wrap{
+    text-align: center;
+  }
+  
+  #post_make_btn_wrap #post_make_btn{
+    color: #fff;
+    background-color: #ff3f0a;
+    border-color: #ff3f0a;
+    border-radius: 2px;
+    height: 41px;
+  }
+  
+  /* join */
+  #join_btn_wrap_wrap{
+    text-align: center;
+    margin-top: 40px;
+  }
+  #join_btn_wrap{
+    display: inline-block;
+    background-color: #ff3f0a;
+    border-color: #ff3f0a;
+    border-radius: 2px;
+    height: 40px;
+  }
+  #join_btn_wrap button{
+    color: #fff;
+    padding-top: 8px;
+  }
+  #join_back_btn_wrap{
+    display: inline-block;
+    background-color: #343a40;
+    border-color: #343a40;
+    border-radius: 2px;
+    height: 40px;
+  }
+  #join_back_btn_wrap button{
+    color: #fff;
+    padding-top: 8px;
+  }
+  
+  /* login */
+  #login_btn_wrap_wrap{
+    text-align: center;
+    margin-top: 40px;
+  }
+  #login_btn_wrap_wrap button{
+    color: #fff;
+  }
+  #login_btn_wrap{
+    display: inline-block;
+    background-color: #ff3f0a;
+    border-color: #ff3f0a;
+    border-radius: 2px;
+    height: 40px;
+  }
+  #login_btn_wrap button{
+    color: #fff;
+    padding-top: 8px;
+  } 
+  /* #login_join_btn_wrap{
+    display: inline-block; 
+    background-color: #ff3f0a;
+    border-color: #ff3f0a;
+    border-radius: 2px;
+    height: 41px;
+  }
+  #login_join_btn button{
+    color: #fff;
+  } */
+  #login_back_btn_wrap{
+    display: inline-block;
+    background-color: #343a40;
+    border-color: #343a40;
+    border-radius: 2px;
+    height: 40px;
+  }
+  #login_back_btn{
+    color: #fff;
+    padding-top: 8px;
+  }
+  
+  /* login_check */
+  #login_check_btn_wrap_wrap{
+    text-align: center;
+    margin-top: 40px;
+  }
+  #login_check_btn_wrap{
+    display: inline-block; 
+    background-color: #ff3f0a;
+    border-color: #ff3f0a;
+    border-radius: 2px;
+    height: 41px;
+  }
+  #login_check_btn{
+    color: #fff;
+    padding-top: 9px;
+  }
+  #login_check_join_btn_wrap{
+    display: inline-block;
+    background-color: #343a40;
+    border-color: #343a40;
+    border-radius: 2px;
+    height: 41px;
+  }
+  #login_check_join_btn{
+    color: #fff;
+    padding-top: 9px;
+  }
+  /* translator */
+  #translator_btn_wrap{
+    display: block;
+    text-align: end;
+    margin: 10px 0;
+  }
+  #translator_btn{
+    text-align: center;
+    background-color: #ff3f0a;
+    color: #fff;
+  }
+  /* footer */
+  
+  #footer {
+    background: #eee;
+    padding: 40px 0;
+  }
+  .footer-text {
+    color: #666;
+  }
+  .copyright {
+    font-size: 12px;
+    line-height: 20px;
+    color: #999;
+    letter-spacing: 0;
+    padding-top: 10px;
+  }
 }
