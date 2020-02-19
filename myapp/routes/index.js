@@ -329,7 +329,7 @@ router.put('/reply_update/:id', function(req, res, next) {
 //검색기능
 router.get("/search" , function(req, res, next){
   console.log(req.query.search);
-  let session =req.session;
+  let session =req.session.uid;
   let search = req.query.search;
   models.post.findAll({
     where:{

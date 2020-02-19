@@ -42,7 +42,7 @@
               <div id="reply_btn_wrap">
                 <form action="/reply_update/<%=reply[j].data.id%>?_method=put" method="POST" name="frm_reply_update">
                   <div id="reply_update_btn">
-                    <button type="button" id="reply_update_btn" onclick="reply_update()">수정</button>
+                    <button type="submit" id="reply_update_btn" onclick="reply_update()">수정</button>
                   </div>
                   <div id="reply_update_input">
                     <input type="text" name="reply_up" id="reply_up">
@@ -77,13 +77,14 @@
 </div>
 <script>
   let reply_update = function (){
-    if(!document.getElementById('reply_up').value){
-      alert('수정댓글을 작성해주세요.');
-      reply_up.focus();
-      return;
-    }
+    // if(!document.getElementById('reply_up').value){
+    //   alert('수정댓글을 작성해주세요.');
+    //   reply_up.focus();
+    //   return;
+    //   }
     frm_reply_update.submit();
-  } 
+  };
+
   let reply_make = function () {
     if(!document.getElementById('reply').value){
       alert('댓글을 작성해주세요.');

@@ -16,6 +16,10 @@ tbody tr td a{
 /* section */
 .section1 {
   padding: 40px 0;
+  margin-bottom: 24%;
+}
+.section1 #gap{
+  margin-bottom: 8%;
 }   
 .layout{
   width: 1140px;
@@ -900,4 +904,12 @@ margin-top: 70px;
     letter-spacing: 0;
     padding-top: 10px;
   }
+}
+
+@media screen and (max-width: 320px){
+  #create_reply_wrap {
+    margin-top: 80px;
+    display: inline-block;
+    width: 170px;
+}
 }
