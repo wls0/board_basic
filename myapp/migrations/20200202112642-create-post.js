@@ -20,10 +20,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      view:{
+      view: {
         type: Sequelize.INTEGER,
-        defualtValue:0,
-        allowNull : true,
+        defualtValue: 0,
+        allowNull: true,
       },
       createdAt: {
         allowNull: false,

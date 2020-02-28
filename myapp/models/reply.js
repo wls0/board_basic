@@ -2,18 +2,19 @@
 module.exports = (sequelize, DataTypes) => {
   const reply = sequelize.define('reply', {
     postId: {
-      type:DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     user: {
-      type:DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     reply: {
-      type:DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
-    }  }, {});
-  reply.associate = function(models) {
+    }
+  }, {});
+  reply.associate = function (models) {
     reply.belongsTo(models.post, {
       foreignKey: "postId"
     })

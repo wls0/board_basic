@@ -10,16 +10,16 @@ module.exports = {
       },
       idUser: {
         type: Sequelize.STRING,
-        allowNull:false,
-        unique:true
+        allowNull: false,
+        unique: true
       },
       name: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false
       },
       password: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -32,7 +32,7 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    
+
     return queryInterface.dropTable('users');
   }
 };
