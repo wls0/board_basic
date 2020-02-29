@@ -5,11 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const methodOverride = require('method-override');
 var compression = require('compression')
-var models =require('./models');
+var models = require('./models');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var translatorRouter= require('./routes/translator'); 
-models.sequelize.sync().then( () => {
+var translatorRouter = require('./routes/translator');
+models.sequelize.sync().then(() => {
   console.log(" DB 연결 성공");
 }).catch(err => {
   console.log("연결 실패");
@@ -28,20 +28,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/public',express.static('public'));
+app.use('/public', express.static('public'));
 app.use(methodOverride('_method'));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/translator',translatorRouter);
+app.use('/translator', translatorRouter);
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

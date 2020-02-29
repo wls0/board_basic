@@ -4,8 +4,10 @@ const models = require("../models");
 const crypto = require('crypto');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 var flash = require('connect-flash');
-router.use(flash());
+
 
 var options = {
   host: 'localhost',
@@ -24,10 +26,57 @@ router.use(session({
   saveUninitialized: true,
   store: new MySQLStore(options)
 }));
+router.use(flash());
+router.use(passport.initialize());
+router.use(passport.session());
+
+passport.serializeUser(function (user, done) {
+  console.log('serializeUser', user.idUser)
+  done(null, user.idUser);
+});
+
+passport.deserializeUser(function (user, done) {
+  console.log('deserializeUser', user);
+  // models.user.findAll(id, function (err, user) {
+  done(null, user);
+  // });
+});
+
+passport.use(new LocalStrategy({
+  usernameField: 'id',
+  passwordField: 'password'
+},
+  function (username, password, done) {
+    models.user.findOne({
+      where: { idUser: username }
+    })
+      .then(result => {
+        let pwd = crypto.createHash("sha512").update(password).digest("hex");
+        if (result.idUser === username) {
+          if (result.password === pwd) {
+            console.log('성공');
+            return done(null, result);
+          } else {
+            console.log('password');
+            return done(null, false, { message: 'Incorrect password.' });
+          }
+        } else {
+          console.log('id', result.idUser);
+          return done(null, false, { message: 'Incorrect username.' });
+        }
+      })
+  }
+));
+
+router.post('/login',
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/users/login',
+    failureFlash: true
+  }));
 
 //회원가입 페이지 이동
 router.get('/join', function (req, res, next) {
-  let session = req.session.uid;
   res.render("join", {
     session: session
   });
@@ -56,7 +105,7 @@ router.post('/join', function (req, res, next) {
 //회원가입 확인
 router.get('/join_check', function (req, res, next) {
   // console.log(req.cookies);
-  let session = req.session.uid;
+  let session = req.session.passport;
   // console.log(session);
   let message = req.flash('join_check')[0];
   res.render("join_check", {
@@ -69,7 +118,7 @@ router.get('/join_check', function (req, res, next) {
 //로그인 페이지 이동
 router.get('/login', function (req, res, next) {
   // console.log(req.cookies);
-  let session = req.session.uid;
+  let session = req.session.passport;
   console.log(session);
   // let message = req.flash('login')[0];
   res.render("login", {
@@ -80,7 +129,7 @@ router.get('/login', function (req, res, next) {
 //로그인이 안된 세션 접근시
 router.get('/login_check', function (req, res, next) {
   // console.log(req.cookies);
-  let session = req.session.uid;
+  let session = req.session.passport;
   // console.log(session);
   let message = req.flash('login_check')[0];
   res.render("login_check", {
@@ -91,7 +140,7 @@ router.get('/login_check', function (req, res, next) {
 
 //게시물유저와 로그인 유저가 다를시
 router.get('/login_different', function (req, res, next) {
-  let session = req.session.uid;
+  let session = req.session.passport;
   let message = req.flash('login_different')[0];
   res.render("contect_error", {
     session: session,
@@ -99,42 +148,47 @@ router.get('/login_different', function (req, res, next) {
   });
 });
 
-//로그인 
-router.post('/login', async function (req, res, next) {
-  let body = req.body;
-  // console.log(body);
-  let result = await models.user.findOne({
-    where: {
-      idUser: body.id
-    }
-  });
-  // if(result.id === null){
-  //   req.flash('login_check','아이디 혹은 비밀번호가 틀렸습니다.');
-  //   res.redirect("/users/login_check");
-  // }
-  let db_pwd = result.password;
-  let input_pwd = body.password;
-  let pwd = crypto.createHash("sha512").update(input_pwd).digest("hex");
 
-  if (db_pwd === pwd) {
-    console.log("로그인 비밀번호 일치");
-    // console.log(body);
-    // console.log(body.id);
-    req.session.uid = body.id;
-    console.log(req.session);
-    req.session.save(function () {
-      return res.redirect('/');
-    });
-  } else if (db_pwd !== pwd) {
-    console.log("로그인 비밀번호 불일치");
-    req.flash('login_check', '아이디 혹은 비밀번호가 틀렸습니다.');
-    res.redirect("/users/login_check");
-  } else {
-    console.log("로그인 비밀번호 불일치");
-    req.flash('login_check', '아이디 혹은 비밀번호가 틀렸습니다.');
-    res.redirect("/users/login_check");
-  }
-});
+
+
+
+//로그인 
+// router.post('/login', async function (req, res, next) {
+//   let body = req.body;
+//   // console.log(body);
+//   let result = await models.user.findOne({
+//     where: {
+//       idUser: body.id
+//     }
+//   });
+//   // if(result.id === null){
+//   //   req.flash('login_check','아이디 혹은 비밀번호가 틀렸습니다.');
+//   //   res.redirect("/users/login_check");
+//   // }
+//   let db_pwd = result.password;
+//   let input_pwd = body.password;
+//   let pwd = crypto.createHash("sha512").update(input_pwd).digest("hex");
+
+//   if (db_pwd === pwd) {
+//     console.log("로그인 비밀번호 일치");
+//     // console.log(body);
+//     // console.log(body.id);
+//     req.session.uid = body.id;
+//     console.log(req.session);
+//     req.session.save(function () {
+//       return res.redirect('/');
+//     });
+//   } else if (db_pwd !== pwd) {
+//     console.log("로그인 비밀번호 불일치");
+//     req.flash('login_check', '아이디 혹은 비밀번호가 틀렸습니다.');
+//     res.redirect("/users/login_check");
+//   } else {
+//     console.log("로그인 비밀번호 불일치");
+//     req.flash('login_check', '아이디 혹은 비밀번호가 틀렸습니다.');
+//     res.redirect("/users/login_check");
+//   }
+// });
+
 //로그아웃
 router.delete("/logout", function (req, res, next) {
   console.log(req.session);

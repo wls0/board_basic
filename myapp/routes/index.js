@@ -30,7 +30,8 @@ router.use(flash());
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  let session = req.session.uid;
+  // console.log('/', req.session.passport.user);
+  let session = req.session.passport;
   res.render('index', {
     session: session
   });
@@ -38,7 +39,7 @@ router.get('/', function (req, res, next) {
 
 //게시글 페이지
 // router.get('/post/:page', function(req, res, next) {
-//   let session = req.session.uid;
+//   let session = req.session.passport;
 //   let page_num = req.params.page;
 //   console.log(page_num);
 //   let offset = 0;
@@ -69,7 +70,7 @@ router.get('/', function (req, res, next) {
 // });
 
 router.get('/post/:page', function (req, res, next) {
-  let session = req.session.uid;
+  let session = req.session.passport;
   let page_num = req.params.page;
   // console.log(page_num);
   let offset = 0;
@@ -109,7 +110,7 @@ router.get('/post/:page', function (req, res, next) {
 
 //글 생성 페이지 이동 
 router.get('/post_make', function (req, res, next) {
-  let session = req.session.uid;
+  let session = req.session.passport;
   console.log(session);
   if (session) {
     res.render('post_make', {
@@ -123,9 +124,9 @@ router.get('/post_make', function (req, res, next) {
 
 // 글 상세 페이지 이동
 router.get('/post/page/:id', function (req, res, next) {
-  let session = req.session.uid;
+  let session = req.session.passport;
   let id = req.params.id;
-  let login_user = req.session.uid;
+  let login_user = req.session.passport;
   models.post.findAll({
     where: { id: id }
   })
@@ -173,7 +174,7 @@ router.get('/post/page/:id', function (req, res, next) {
 
 //글 수정 페이지 이동
 router.get('/post_update/:id', function (req, res, next) {
-  let session = req.session.uid;
+  let session = req.session.passport;
   let id = req.params.id;
   models.post.findOne({
     where: {
@@ -228,7 +229,7 @@ router.put('/post_update/:id', function (req, res, next) {
 //글 삭제
 router.delete('/post_delete/:id', function (req, res, next) {
   let id = req.params.id;
-  let session = req.session.uid;
+  let session = req.session.passport;
   models.post.findOne({
     where: { id: id }
   })
@@ -268,7 +269,7 @@ router.delete('/post_delete/:id', function (req, res, next) {
 //댓글 삭제
 router.delete('/reply_delete/:id', function (req, res, next) {
   let id = req.params.id;
-  let session = req.session.uid;
+  let session = req.session.passport;
   models.reply.findOne({
     where: { id: id }
   })
@@ -300,7 +301,7 @@ router.delete('/reply_delete/:id', function (req, res, next) {
 router.put('/reply_update/:id', function (req, res, next) {
   let id = req.params.id;
   let body = req.body;
-  let session = req.session.uid;
+  let session = req.session.passport;
   models.reply.findOne({
     where: { id: id }
   })
@@ -329,7 +330,7 @@ router.put('/reply_update/:id', function (req, res, next) {
 //검색기능
 router.get("/search", function (req, res, next) {
   console.log(req.query.search);
-  let session = req.session.uid;
+  let session = req.session.passport;
   let search = req.query.search;
   models.post.findAll({
     where: {
@@ -375,7 +376,7 @@ router.get("/search", function (req, res, next) {
 router.post("/reply/:id", function (req, res, next) {
   let body = req.body;
   let id = req.params.id;
-  let login_user = req.session.uid;
+  let login_user = req.session.passport;
   console.log(id);
   if (login_user) {
     models.reply.create({
@@ -400,7 +401,7 @@ router.post("/reply/:id", function (req, res, next) {
 router.post('/post_make', function (req, res, next) {
   let body = req.body;
   console.log(body);
-  let login_user = req.session.uid;
+  let login_user = req.session.passport;
   models.post.create({
     title: body.title,
     description: body.description,

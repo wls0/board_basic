@@ -5,14 +5,14 @@ var client_secret = 'hQGUWpA3Fg';
 var request = require('request');
 
 router.get('/', function (req, res, next) {
-  let session = req.session.uid;
+  let session = req.session.passport;
   res.render('translator', {
     session: session
   });
 });
 
 router.get('/result', function (req, res) {
-  let session = req.session.uid;
+  let session = req.session.passport;
   var query = req.query.translator;
   var api_url = 'https://openapi.naver.com/v1/papago/n2mt';
   var options = {
