@@ -9,6 +9,7 @@ var models = require('./models');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
+var authRouter = require('./routes/auth');
 var translatorRouter = require('./routes/translator');
 
 models.sequelize.sync().then(() => {
@@ -35,6 +36,7 @@ app.use(methodOverride('_method'));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
+app.use('/auth', authRouter);
 app.use('/translator', translatorRouter);
 
 

@@ -229,7 +229,7 @@ router.put('/post_update/:id', function (req, res, next) {
 //글 삭제
 router.delete('/post_delete/:id', function (req, res, next) {
   let id = req.params.id;
-  let session = req.session.passport;
+  let session = req.session.passport.user;
   models.post.findOne({
     where: { id: id }
   })
@@ -401,7 +401,7 @@ router.post("/reply/:id", function (req, res, next) {
 router.post('/post_make', function (req, res, next) {
   let body = req.body;
   console.log(body);
-  let login_user = req.session.passport;
+  let login_user = req.session.passport.user;
   models.post.create({
     title: body.title,
     description: body.description,

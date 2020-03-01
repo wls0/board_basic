@@ -25,7 +25,7 @@ router.post('/join', function (req, res, next) {
   })
     .then(result => {
       console.log("회원가입 성공");
-      res.redirect("/users/login");
+      res.redirect("/login");
     })
     .catch(err => {
       console.log("회원가입 실패" + err);

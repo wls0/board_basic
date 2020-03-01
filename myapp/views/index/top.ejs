@@ -45,7 +45,7 @@
         </nav>  
       <%if (session){%>
         <div id="top_logout">
-          <form action="/login/logout?_method=DELETE" method="post" name="frm_logout">
+          <form action="/auth/logout" method="get" name="frm_logout">
             <button type="button" onclick="logout()" class="btn btn-secondary">로그아웃</button>
           </form>
         </div>

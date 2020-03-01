@@ -33,7 +33,7 @@ router.use(passport.session());
 
 passport.serializeUser(function (user, done) {
   console.log('serializeUser', user.idUser)
-  done(null, user.idUser);
+  done(null, user.name);
 });
 
 passport.deserializeUser(function (user, done) {
@@ -88,39 +88,6 @@ router.post('/',
     failureFlash: true
   }));
 
-passport.use(new NaverStrategy({
-  clientID: config.naver.clientID,
-  clientSecret: config.naver.clientSecret,
-  callbackURL: config.naver.callbackURL
-},
-  function (accessToken, refreshToken, profile, done) {
-    User.findOne({
-      'naver.id': profile.id
-    }, function (err, user) {
-      if (!user) {
-        user = new User({
-          name: profile.displayName,
-          email: profile.emails[0].value,
-          username: profile.displayName,
-          provider: 'naver',
-          naver: profile._json
-        });
-        user.save(function (err) {
-          if (err) console.log(err);
-          return done(err, user);
-        });
-      } else {
-        return done(err, user);
-      }
-    });
-  }
-));
-
-//네이버 로그인
-router.route('/auth/naver')
-  .get(passport.authenticate('naver', {
-    failureRedirect: '/login'
-  }), users.signin);
 
 //로그아웃
 router.delete("/logout", function (req, res, next) {

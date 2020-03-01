@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     idUser: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: true,
+      isEmail: true
     },
     name: {
       type: DataTypes.STRING,
@@ -12,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: true
     }
   }, {});
   user.associate = function (models) {
