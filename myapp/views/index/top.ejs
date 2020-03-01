@@ -45,14 +45,14 @@
         </nav>  
       <%if (session){%>
         <div id="top_logout">
-          <form action="/users/logout?_method=DELETE" method="post" name="frm_logout">
+          <form action="/login/logout?_method=DELETE" method="post" name="frm_logout">
             <button type="button" onclick="logout()" class="btn btn-secondary">로그아웃</button>
           </form>
         </div>
         <%}else{%>
         <div id="top_login">
           <div class="top_login_login">
-            <a class="nav-link" href="/users/login">Login</a>
+            <a class="nav-link" href="/login">Login</a>
           </div>
           <div class="top_login_sign">
             <a class="nav-link" href="/users/join">Sign Up</a>

@@ -3,80 +3,12 @@ var router = express.Router();
 const models = require("../models");
 const crypto = require('crypto');
 const session = require('express-session');
-const MySQLStore = require('express-mysql-session')(session);
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 var flash = require('connect-flash');
 
 
-var options = {
-  host: 'localhost',
-  user: 'root',
-  password: 'abcd1',
-  database: 'board',
-  clearExpired: true,
-  checkExpirationInterval: 900000,
-  expiration: 24000 * 60 * 60,
-};
-
-router.use(session({
-  key: 'sid',
-  secret: 'asdasdzxc',
-  resave: false,
-  saveUninitialized: true,
-  store: new MySQLStore(options)
-}));
-router.use(flash());
-router.use(passport.initialize());
-router.use(passport.session());
-
-passport.serializeUser(function (user, done) {
-  console.log('serializeUser', user.idUser)
-  done(null, user.idUser);
-});
-
-passport.deserializeUser(function (user, done) {
-  console.log('deserializeUser', user);
-  // models.user.findAll(id, function (err, user) {
-  done(null, user);
-  // });
-});
-
-passport.use(new LocalStrategy({
-  usernameField: 'id',
-  passwordField: 'password'
-},
-  function (username, password, done) {
-    models.user.findOne({
-      where: { idUser: username }
-    })
-      .then(result => {
-        let pwd = crypto.createHash("sha512").update(password).digest("hex");
-        if (result.idUser === username) {
-          if (result.password === pwd) {
-            console.log('성공');
-            return done(null, result);
-          } else {
-            console.log('password');
-            return done(null, false, { message: 'Incorrect password.' });
-          }
-        } else {
-          console.log('id', result.idUser);
-          return done(null, false, { message: 'Incorrect username.' });
-        }
-      })
-  }
-));
-
-router.post('/login',
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/users/login',
-    failureFlash: true
-  }));
-
 //회원가입 페이지 이동
 router.get('/join', function (req, res, next) {
+  let session = req.session.passport;
   res.render("join", {
     session: session
   });
@@ -114,17 +46,6 @@ router.get('/join_check', function (req, res, next) {
   });
 });
 
-
-//로그인 페이지 이동
-router.get('/login', function (req, res, next) {
-  // console.log(req.cookies);
-  let session = req.session.passport;
-  console.log(session);
-  // let message = req.flash('login')[0];
-  res.render("login", {
-    session: session
-  });
-});
 
 //로그인이 안된 세션 접근시
 router.get('/login_check', function (req, res, next) {
@@ -189,12 +110,5 @@ router.get('/login_different', function (req, res, next) {
 //   }
 // });
 
-//로그아웃
-router.delete("/logout", function (req, res, next) {
-  console.log(req.session);
-  req.session.destroy();
-  res.clearCookie('sid');
-  return res.redirect('/');
-});
 
 module.exports = router;
