@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       defualtValue: 0,
       allowNull: true,
     }
-  }, {});
+  }, {})
   post.associate = function (models) {
     post.hasMany(models.reply);
   };

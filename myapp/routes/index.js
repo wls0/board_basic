@@ -8,6 +8,8 @@ const sequelize = require('sequelize');
 const Op = sequelize.Op;
 var flash = require('connect-flash');
 
+
+
 var options = {
   host: 'localhost',
   user: 'root',
@@ -69,42 +71,78 @@ router.get('/', function (req, res, next) {
 //   })
 // });
 
+// router.get('/post/:page', function (req, res, next) {
+//   let session = req.session.passport;
+//   let page_num = req.params.page;
+//   // console.log(page_num);
+//   let offset = 0;
+//   if (page_num > 1) {
+//     offset = 5 * (page_num - 1);
+//   }
+//   models.post.count().then(count => {
+//     // console.log(offset);
+//     models.post.findAll({
+//       offset: offset,
+//       limit: 5
+//     }).then(result => {
+//       let post = function () {
+//         let posts = [];
+//         result.reverse();
+//         for (let i = 0; i < result.length; i++) {
+//           let date = moment(result[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
+//           posts.push({
+//             data: result[i],
+//             date: date
+//           });
+//         }
+//         return posts;
+//       }
+//       let count_out = Math.ceil(count / 5) + 1;
+//       console.log(count_out + 1);
+//       res.render("post", {
+//         post: post(),
+//         session: session,
+//         count: count_out
+//       });
+//     })
+//   })
+// });
+
+
 router.get('/post/:page', function (req, res, next) {
   let session = req.session.passport;
   let page_num = req.params.page;
-  // console.log(page_num);
-  let offset = 0;
-  if (page_num > 1) {
-    offset = 5 * (page_num - 1);
-  }
-  models.post.count().then(count => {
-    // console.log(offset);
-    models.post.findAll({
-      offset: offset,
-      limit: 6
-    }).then(result => {
-      let post = function () {
-        let posts = [];
-        result.reverse();
-        for (let i = 0; i < result.length; i++) {
-          let date = moment(result[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
-          posts.push({
-            data: result[i],
-            date: date
-          });
-        }
-        return posts;
-      }
-      let count_out = Math.ceil(count / 6) + 1;
-      console.log(count_out + 1);
-      res.render("post", {
-        post: post(),
-        session: session,
-        count: count_out
-      });
-    })
+
+  models.post.findAndCountAll({
+    offset: 10,
+    limit: 5
   })
+    .then(result => {
+      models.post.findAll({ offset: 0, limit: 5 })
+        .then(result2 => {
+          let post = function () {
+            let posts = [];
+            result2.reverse();
+            for (let i = 0; i < result2.length; i++) {
+              let date = moment(result2[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
+              posts.push({
+                data: result2[i],
+                date: date
+              });
+            }
+            return posts;
+          }
+          let count_out = Math.ceil(result.count / 5) + 1;
+          console.log(count_out + 1);
+          res.render("post", {
+            post: post(),
+            session: session,
+            count: count_out
+          });
+        })
+    })
 });
+
 
 
 
