@@ -17,6 +17,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defualtValue: 0,
       allowNull: true,
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
     }
   }, {})
   post.associate = function (models) {

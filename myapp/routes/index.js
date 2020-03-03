@@ -108,21 +108,28 @@ router.get('/', function (req, res, next) {
 //   })
 // });
 
-
+//게시글 페이지
 router.get('/post/:page', function (req, res, next) {
   let session = req.session.passport;
   let page_num = req.params.page;
-
+  let offset = 0;
+  if (page_num > 1) {
+    offset = 5 * (page_num - 1);
+  }
   models.post.findAndCountAll({
-    offset: 10,
+
     limit: 5
   })
     .then(result => {
-      models.post.findAll({ offset: 0, limit: 5 })
+      models.post.findAll({
+        offset: offset,
+        limit: 5,
+        order: [['updatedAt', 'DESC']]
+      })
         .then(result2 => {
           let post = function () {
             let posts = [];
-            result2.reverse();
+            // result2.reverse();
             for (let i = 0; i < result2.length; i++) {
               let date = moment(result2[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
               posts.push({
