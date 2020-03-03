@@ -1,34 +1,9 @@
 var express = require('express');
 var router = express.Router();
 let models = require('../models');
-let moment = require('moment');
-const session = require('express-session');
-const MySQLStore = require('express-mysql-session')(session);
 const sequelize = require('sequelize');
 const Op = sequelize.Op;
-var flash = require('connect-flash');
-
-
-
-var options = {
-  host: 'localhost',
-  user: 'root',
-  password: 'abcd1',
-  database: 'board',
-  clearExpired: true,
-  checkExpirationInterval: 900000,
-  expiration: 24000 * 60 * 60,
-};
-
-router.use(session({
-  key: 'sid',
-  secret: 'asdasdzxc',
-  resave: false,
-  saveUninitialized: true,
-  store: new MySQLStore(options)
-}));
-
-router.use(flash());
+let date2 = require('../lib/lib');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -40,75 +15,6 @@ router.get('/', function (req, res, next) {
 });
 
 //게시글 페이지
-// router.get('/post/:page', function(req, res, next) {
-//   let session = req.session.passport;
-//   let page_num = req.params.page;
-//   console.log(page_num);
-//   let offset = 0;
-//   if(page_num > 1){
-//     offset =5 * (page_num -1);
-//   }
-//   console.log(offset);
-//   models.post.findAll({
-//     offset:offset,
-//     limit:6
-//   }).then(result=>{
-//     let post = function(){
-//       let posts=[];
-//       for(let i =0; i<result.length; i++){
-//         let date=moment(result[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
-//         posts.push({
-//           data:result[i],
-//           date:date
-//         });
-//       }
-//       return posts;
-//     }
-//     res.render("post",{
-//       post:post().reverse(),
-//       session:session
-//     });
-//   })
-// });
-
-// router.get('/post/:page', function (req, res, next) {
-//   let session = req.session.passport;
-//   let page_num = req.params.page;
-//   // console.log(page_num);
-//   let offset = 0;
-//   if (page_num > 1) {
-//     offset = 5 * (page_num - 1);
-//   }
-//   models.post.count().then(count => {
-//     // console.log(offset);
-//     models.post.findAll({
-//       offset: offset,
-//       limit: 5
-//     }).then(result => {
-//       let post = function () {
-//         let posts = [];
-//         result.reverse();
-//         for (let i = 0; i < result.length; i++) {
-//           let date = moment(result[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
-//           posts.push({
-//             data: result[i],
-//             date: date
-//           });
-//         }
-//         return posts;
-//       }
-//       let count_out = Math.ceil(count / 5) + 1;
-//       console.log(count_out + 1);
-//       res.render("post", {
-//         post: post(),
-//         session: session,
-//         count: count_out
-//       });
-//     })
-//   })
-// });
-
-//게시글 페이지
 router.get('/post/:page', function (req, res, next) {
   let session = req.session.passport;
   let page_num = req.params.page;
@@ -117,7 +23,6 @@ router.get('/post/:page', function (req, res, next) {
     offset = 5 * (page_num - 1);
   }
   models.post.findAndCountAll({
-
     limit: 5
   })
     .then(result => {
@@ -127,30 +32,17 @@ router.get('/post/:page', function (req, res, next) {
         order: [['updatedAt', 'DESC']]
       })
         .then(result2 => {
-          let post = function () {
-            let posts = [];
-            // result2.reverse();
-            for (let i = 0; i < result2.length; i++) {
-              let date = moment(result2[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
-              posts.push({
-                data: result2[i],
-                date: date
-              });
-            }
-            return posts;
-          }
+          let date = date2.date(result2);
           let count_out = Math.ceil(result.count / 5) + 1;
           console.log(count_out + 1);
           res.render("post", {
-            post: post(),
+            post: date,
             session: session,
             count: count_out
           });
         })
     })
 });
-
-
 
 
 //글 생성 페이지 이동 
@@ -180,33 +72,11 @@ router.get('/post/page/:id', function (req, res, next) {
         where: { postId: id }
       })
         .then(result2 => {
-          let post2 = function () {
-            let posts = [];
-            for (let j = 0; j < result2.length; j++) {
-              let date2 = moment(result2[j].createdAt).format("YYYY-MM-DD HH:mm:ss")
-              posts.push({
-                data: result2[j],
-                date: date2
-                //로그인한 session아이디가 들어가야 함
-              });
-            }
-            return posts;
-          }
-          let post = function () {
-            let posts = [];
-            for (let i = 0; i < result.length; i++) {
-              let date = moment(result[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
-              posts.push({
-                data: result[i],
-                date: date,
-                login_user: login_user
-              });
-            }
-            return posts;
-          }
+          let reply_date = date2.reply_date(result2);
+          let post = date2.date(result);
           res.render("post_board", {
-            post: post(),
-            reply: post2(),
+            post: post,
+            reply: reply_date,
             session: session
           })
         })
@@ -314,7 +184,7 @@ router.delete('/post_delete/:id', function (req, res, next) {
 //댓글 삭제
 router.delete('/reply_delete/:id', function (req, res, next) {
   let id = req.params.id;
-  let session = req.session.passport;
+  let session = req.session.passport.user;
   models.reply.findOne({
     where: { id: id }
   })
@@ -399,20 +269,11 @@ router.get("/search", function (req, res, next) {
     }
   })
     .then(result => {
-      let post = function () {
-        let posts = [];
-        for (let i = 0; i < result.length; i++) {
-          let date = moment(result[i].createdAt).format("YYYY-MM-DD HH:mm:ss")
-          posts.push({
-            date: date
-          });
-        }
-        return posts;
-      }
+      let post = date2.date(result)
       res.render("search", {
         search: result,
         session: session,
-        date: post()
+        date: post
       })
     })
 });
@@ -421,8 +282,8 @@ router.get("/search", function (req, res, next) {
 router.post("/reply/:id", function (req, res, next) {
   let body = req.body;
   let id = req.params.id;
-  let login_user = req.session.passport;
-  console.log(id);
+  let login_user = req.session.passport.user;
+  console.log(body);
   if (login_user) {
     models.reply.create({
       postId: id,
@@ -461,4 +322,5 @@ router.post('/post_make', function (req, res, next) {
       console.log("글 추가 실패" + err);
     })
 });
+
 module.exports = router;

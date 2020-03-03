@@ -17,7 +17,7 @@
       <%}else if(!search.id){%>
       <% for(let i=0; i<search.length; i++) { %>
         <tr>
-          <td><a href="/post/<%=search[i].id%>"><%= search[i].title %></a></td>
+          <td><a href="/post/page/<%=search[i].id%>"><%= search[i].title %></a></td>
           <td><%= search[i].user %></td>
           <td><%=date[i].date%></td>
           <%}%>

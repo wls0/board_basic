@@ -2,46 +2,9 @@ var express = require('express');
 var router = express.Router();
 const models = require("../models");
 const crypto = require('crypto');
-const session = require('express-session');
-const MySQLStore = require('express-mysql-session')(session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const NaverStrategy = require('passport-naver').Strategy;
 var flash = require('connect-flash');
-
-var options = {
-  host: 'localhost',
-  user: 'root',
-  password: 'abcd1',
-  database: 'board',
-  clearExpired: true,
-  checkExpirationInterval: 900000,
-  expiration: 24000 * 60 * 60,
-};
-
-router.use(session({
-  key: 'sid',
-  secret: 'asdasdzxc',
-  resave: false,
-  saveUninitialized: true,
-  store: new MySQLStore(options)
-}));
-
-router.use(flash());
-router.use(passport.initialize());
-router.use(passport.session());
-
-passport.serializeUser(function (user, done) {
-  console.log('serializeUser', user.idUser)
-  done(null, user.name);
-});
-
-passport.deserializeUser(function (user, done) {
-  console.log('deserializeUser', user);
-  // models.user.findAll(id, function (err, user) {
-  done(null, user);
-  // });
-});
 
 //로그인 페이지 이동
 router.get('/', function (req, res, next) {
@@ -88,7 +51,6 @@ router.post('/',
     failureFlash: true
   }));
 
-
 //로그아웃
 router.delete("/logout", function (req, res, next) {
   console.log(req.session);
@@ -96,7 +58,5 @@ router.delete("/logout", function (req, res, next) {
   res.clearCookie('sid');
   return res.redirect('/');
 });
-
-
 
 module.exports = router;

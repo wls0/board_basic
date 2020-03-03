@@ -4,6 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const methodOverride = require('method-override');
+const passport = require('passport');
+const session = require('express-session');
+const flash = require('connect-flash');
+const MySQLStore = require('express-mysql-session')(session);
 var compression = require('compression')
 var models = require('./models');
 var indexRouter = require('./routes/index');
@@ -20,6 +24,39 @@ models.sequelize.sync().then(() => {
 });
 
 var app = express();
+
+var options = {
+  host: 'localhost',
+  user: 'root',
+  password: 'abcd1',
+  database: 'board',
+  clearExpired: true,
+  checkExpirationInterval: 900000,
+  expiration: 24000 * 60 * 60,
+};
+
+app.use(session({
+  key: 'sid',
+  secret: 'asdasdzxc',
+  resave: false,
+  saveUninitialized: true,
+  store: new MySQLStore(options)
+}));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function (user, done) {
+  console.log('serializeUser', user.idUser)
+  done(null, user.name);
+});
+
+passport.deserializeUser(function (user, done) {
+  console.log('deserializeUser', user);
+  // models.user.findAll(id, function (err, user) {
+  done(null, user);
+  // });
+});
 
 app.use(compression());
 // view engine setup

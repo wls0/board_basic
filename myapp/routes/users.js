@@ -2,9 +2,6 @@ var express = require('express');
 var router = express.Router();
 const models = require("../models");
 const crypto = require('crypto');
-const session = require('express-session');
-var flash = require('connect-flash');
-
 
 //회원가입 페이지 이동
 router.get('/join', function (req, res, next) {
@@ -46,7 +43,6 @@ router.get('/join_check', function (req, res, next) {
   });
 });
 
-
 //로그인이 안된 세션 접근시
 router.get('/login_check', function (req, res, next) {
   // console.log(req.cookies);
@@ -68,47 +64,5 @@ router.get('/login_different', function (req, res, next) {
     message: message
   });
 });
-
-
-
-
-
-//로그인 
-// router.post('/login', async function (req, res, next) {
-//   let body = req.body;
-//   // console.log(body);
-//   let result = await models.user.findOne({
-//     where: {
-//       idUser: body.id
-//     }
-//   });
-//   // if(result.id === null){
-//   //   req.flash('login_check','아이디 혹은 비밀번호가 틀렸습니다.');
-//   //   res.redirect("/users/login_check");
-//   // }
-//   let db_pwd = result.password;
-//   let input_pwd = body.password;
-//   let pwd = crypto.createHash("sha512").update(input_pwd).digest("hex");
-
-//   if (db_pwd === pwd) {
-//     console.log("로그인 비밀번호 일치");
-//     // console.log(body);
-//     // console.log(body.id);
-//     req.session.uid = body.id;
-//     console.log(req.session);
-//     req.session.save(function () {
-//       return res.redirect('/');
-//     });
-//   } else if (db_pwd !== pwd) {
-//     console.log("로그인 비밀번호 불일치");
-//     req.flash('login_check', '아이디 혹은 비밀번호가 틀렸습니다.');
-//     res.redirect("/users/login_check");
-//   } else {
-//     console.log("로그인 비밀번호 불일치");
-//     req.flash('login_check', '아이디 혹은 비밀번호가 틀렸습니다.');
-//     res.redirect("/users/login_check");
-//   }
-// });
-
 
 module.exports = router;
