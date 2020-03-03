@@ -4,7 +4,8 @@ const models = require("../models");
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const NaverStrategy = require('passport-naver').Strategy;
-let auth = require('../lib/lib');
+const secret = require('../db/secret');
+const auth = require('../lib/lib');
 
 
 //네이버 로그인 처음
@@ -32,8 +33,8 @@ router.get('/google/callback',
 
 //네이버 로그인 
 passport.use(new NaverStrategy({
-  clientID: 'hlOJ1di6yot7rckQmOj8',
-  clientSecret: 'hQGUWpA3Fg',
+  clientID: secret.naver.clientID,
+  clientSecret: secret.naver.clientSecret,
   callbackURL: '/auth/naver/callback',
   authType: 'reauthenticate'
 },
@@ -50,8 +51,8 @@ passport.use(new NaverStrategy({
 
 //구글 로그인
 passport.use(new GoogleStrategy({
-  clientID: '307228444318-rs02007fjb9toj95f0403r72bfudliu1.apps.googleusercontent.com',
-  clientSecret: 'caBMxvyziNL9Kka0M774vL4F',
+  clientID: secret.google.clientID,
+  clientSecret: secret.google.clientSecret,
   callbackURL: '/auth/google/callback',
   authType: 'reauthenticate'
 },
