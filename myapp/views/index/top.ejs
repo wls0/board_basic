@@ -10,6 +10,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery.min.js"></script>
 </head>
   <header id="header1">
     <div class="layout">
@@ -18,8 +19,8 @@
         <a href="/"><img src="../../public/images/logo.png"></a>
         </div>
       <div id="search_input_wrap">
-        <form action="/search" method="GET" name="frm_search">
-          <input type="text" id="search" name="search">
+        <form action="/search" method="GET" class="frm_search">
+          <input type="text" id="search" class="form-control" name="search">
           <div id="search_btn_wrap">
             <button type="button" id="search_btn" onclick="search_start()" class="btn btn-dark">검색</button>
           </div>
@@ -42,7 +43,7 @@
               <a class="nav-link" href="/translator">번역기</a>
             </li>
           </ul>
-        </nav>  
+        </nav>
       <%if (session){%>
         <div id="top_logout">
           <form action="/auth/logout" method="get" name="frm_logout">
