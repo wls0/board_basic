@@ -1,4 +1,8 @@
 <% include ./index/top.ejs%>
+<script>
+
+</script>
+
 <section class="section1">
   <div class="board_list_wrap">
     <a>회원가입</a>
@@ -7,8 +11,12 @@
     <form action="/users/join" method="POST" name="frm_join">
       <div class="form-group">
         <label>id:</label>
-        <input type="text" class="form-control" id="id" name="id">
+        <input type="email" class="form-control" id="id" name="id">
       </div>
+      <div id ="join_check_btn_wrap">
+        <button type="button" onclick="id_check()" id="join_check_btn" class="btn">중복체크</button>
+      </div>
+      <div id="join_check_result"></div>
       <div class="form-group">
         <label>password:</label>
         <input type="password" class="form-control" id="password" name="password">
@@ -46,7 +54,47 @@
       username.focus();
       return;
     }
+    if(id_check()){
+      alert('중복확인을 해주세요');
+			return;
+    }
     frm_join.submit();
+  }
+
+  let id_check =function(){
+  let user_id =$('#id').val();
+  if(!user_id){
+    alert('아이디를 입력하세요');
+    $('#id').focus();
+    return;
+  }
+  $.ajax({
+    url: "/users/join_idcheck",
+    type:"post",
+    header:{
+    "Content-Type":"application/javascript",
+    "X-HTTP-Method-Override":"post"},
+    async:false,
+    data:$('#id'),
+    success:function(result){
+      // console.log(result);
+      let point = '';
+      if(!result){
+        // let answer = '사용할 수 있습니다.'
+        let point = true;
+        let result_val = $("#join_check_result").text(result);
+      }else{
+        // let answer = '사용할 수 없습니다.'
+        let point = false;
+        let result_val = $("#join_check_result").text(result);
+      }
+      console.log(point);
+      return;
+      },
+    error:function(req,status,error){
+      console.log(req.status);
+      }
+    })
   }
 </script>
 <% include ./index/foot.ejs%>

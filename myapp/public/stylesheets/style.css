@@ -312,6 +312,17 @@ tbody tr td a {
 }
 
 /* join */
+#join_check_btn_wrap {
+  display: inline-block;
+  background-color: #ff3f0a;
+  border-color: #ff3f0a;
+  border-radius: 2px;
+  height: 40px;
+}
+#join_check_btn {
+  color: #fff;
+  padding-top: 8px;
+}
 #join_btn_wrap_wrap {
   text-align: center;
   margin-top: 40px;

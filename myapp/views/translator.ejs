@@ -1,23 +1,48 @@
 <% include ./index/top.ejs%>
 <script>
-// $('#translator').change(function(){
-  function translator(){
-  let data = $('#translator').val();
-  $.ajax({
-  url: '/translator/result',
-  type:'get',
-  header:{
-  "Content-Type":"application/json",},
-  data:$('#translator').serialize(),
-  success:function(data){
-    
-    let trans= $('#translator_result').val(data);
-    console.log(trans.$('#translator_result').val());
-    $(trans.$('#translator_result').val());
-    }
+$(function(){
+  // $.ajax({
+  //   url: "/translator/langs",
+  //   type:"get",
+  //   header:{
+  //   "Content-Type":"application/javascript",
+  //   "X-HTTP-Method-Override":"get"},
+  //   async:false,
+  //   data:$('#translator'),
+  //   success:function(result){
+  //     let result_val = $("#translator_result").val(result);
+  //     return result_val;
+  //     },
+  //   error:function(req,status,error){
+  //     console.log( req.status);
+  //   }
+  //   })
+  $("#translator").keydown(function(){
+  setTimeout(() => {
+    trans()
+  }, 4000);    
   })
+  let trans = function(){
+      $.ajax({
+    url: "/translator/result",
+    type:"get",
+    header:{
+    "Content-Type":"application/javascript",
+    "X-HTTP-Method-Override":"get"},
+    async:false,
+    data:$('#translator'),
+    success:function(result){
+      console.log(result);
+      let result_val = $("#translator_result").val(result);
+      return result_val;
+      },
+    error:function(req,status,error){
+      console.log( req.status);
+    }
+    })
   }
-// })
+  
+});
 </script>
 
   <section class="section1">
@@ -27,17 +52,17 @@
     <div class="board_form_wrap">
       <div id="tanslator_input_wrap">
         <!-- <form action="/translator/result" method="get" name="frm_translator"> -->
+          <label for="ko">번역:</label>
           <textarea name="translator" id="translator" class="form-control" rows="5">
           </textarea>
           <div id="translator_btn_wrap">
-            <button id="translator_btn" class="btn" onclick="translator()">번역하기</button>
+            <button id="translator_btn" class="btn" onclick="trans()">번역하기</button>
           </div>
           <!-- </form> -->
       </div>
       <div id="tanslator_result_wrap">
         <label for="en">결과:</label>
         <textarea name="translator_result" id="translator_result" class="form-control" rows="5">
-          <%=result%>
         </textarea>
       </div>
     </div>

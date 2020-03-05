@@ -11,6 +11,23 @@ router.get('/join', function (req, res, next) {
   });
 });
 
+//가입시 중복 아이디 체크
+router.post('/join_idcheck', function (req, res, next) {
+  let check = req.body.id
+  // console.log(check);
+  models.user.findOne({
+    where: { idUser: check }
+  })
+    .then(result => {
+      if (!result) {
+        res.json('아이디를 사용할 수 있습니다.');
+      } else {
+        console.log(result.idUser);
+        res.json(result.idUser + ' 아이디를 사용할 수 없습니다.');
+      }
+    })
+})
+
 //회원가입
 router.post('/join', function (req, res, next) {
   let body = req.body;
@@ -26,8 +43,8 @@ router.post('/join', function (req, res, next) {
     })
     .catch(err => {
       console.log("회원가입 실패" + err);
-      req.flash('join_check', '중복되는 아이디가 있습니다.');
-      res.redirect('/users/join_check');
+      req.flash('join_check', '아이디 중복을 확인해주세요.');
+      req.redirect('/users/join')
     })
 });
 
