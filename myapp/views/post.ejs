@@ -30,9 +30,16 @@
   <div id="post_page_wrap_wrap">
     <div id="post_page_wrap">
       <ul class="pagination">
-        <%for(let j=1; j<count; j++) {%>
-        <li class="page-item"><a class="page-link" href="/post/<%=j%>"><%=j%></a></li>     
-        <%}%>
+        <%let i=1; let offset=3; let offset_plus=offset%>
+        
+        <%for(let j=i; j<count; j++) { i++%>
+          
+          <%if(offset>=i){%>
+            <li class="page-item"><a class="page-link" href="/post/<%=j%>"><%=j%></a></li>
+          <%}%>
+  
+          <%}%>
+        <li class="page-item"><a class="page-link" href="/post/<%=i%>">></a></li>
       </ul>
     </div>
   </div>

@@ -63,7 +63,6 @@ router.get('/post_make', function (req, res, next) {
 router.get('/post/page/:id', function (req, res, next) {
   let session = req.session.passport;
   let id = req.params.id;
-  let login_user = req.session.passport;
   models.post.findAll({
     where: { id: id }
   })
@@ -97,7 +96,7 @@ router.get('/post_update/:id', function (req, res, next) {
     }
   })
     .then(result => {
-      if (session === result.user) {
+      if (session.user === result.user) {
         res.render("post_update", {
           post: result,
           session: session
