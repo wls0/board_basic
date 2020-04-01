@@ -29,7 +29,7 @@ router.get('/post/:page', function (req, res, next) {
       models.post.findAll({
         offset: offset,
         limit: 5,
-        order: [['updatedAt', 'DESC']]
+        order: [['createdAt', 'DESC']]
       })
         .then(result2 => {
           let date = date2.date(result2);
@@ -100,31 +100,30 @@ router.get('/post_update/:id', function (req, res, next) {
         res.render("post_update", {
           post: result,
           session: session
-        });
-      } else if (!session) {
-        console.log("비로그인");
-        req.flash('login_check', '로그인을 해주세요.')
-        res.redirect('/users/login_check');
-      } else {
+        })
+      }else if(session.user !== result.user){
         console.log("다른 로그인");
         req.flash('login_different', '작성자만 수정 및 삭제가 가능합니다.')
         res.redirect('/users/login_different');
-      }
-    })
-    .catch(err => {
-      console.log("수정 데이터 조회 실패");
-    })
+    }
+  }).catch(err=>{
+    console.log("비로그인");
+    req.flash('login_check', '로그인을 해주세요.')
+    res.redirect('/users/login_check');
+  }) 
 });
 
 //글 수정
 router.put('/post_update/:id', function (req, res, next) {
   let id = req.params.id;
   let body = req.body;
+  let session= req.session.passport;
   models.post.findOne({
     where: { id: id }
   })
     .then(result => {
-      models.post.update({
+      if(session.user ===result.user){
+        models.post.update({
         title: body.title,
         description: body.description
       }, {
@@ -134,21 +133,29 @@ router.put('/post_update/:id', function (req, res, next) {
           console.log("수정완료");
           res.redirect('/post/page/' + id);
         })
+    }else if(session !== result1.user){
+      console.log("다른 로그인");
+      req.flash('login_different', '작성자만 수정 및 삭제가 가능합니다.')
+      res.redirect('/users/login_different');
+    }
     })
-    .catch(err => {
-      console.log(err, "수정 실패");
+    .catch(err=>{
+      console.log("비로그인");
+      req.flash('login_check', '로그인을 해주세요.')
+      res.redirect('/users/login_check');
     })
 });
 
 //글 삭제
 router.delete('/post_delete/:id', function (req, res, next) {
   let id = req.params.id;
-  let session = req.session.passport.user;
+  let session = req.session.passport;
   models.post.findOne({
     where: { id: id }
   })
     .then(result1 => {
-      if (session === result1.user) {
+      console.log();
+      if (session.user === result1.user) {
         models.post.destroy({
           where: { id: id }
         })
@@ -164,30 +171,27 @@ router.delete('/post_delete/:id', function (req, res, next) {
             console.log("글 삭제");
             res.redirect('/post/1');
           })
-      } else if (!session) {
-        console.log("비로그인");
-        req.flash('login_check', '로그인을 해주세요.')
-        res.redirect('/users/login_check');
-      } else {
-        console.log("다른 로그인");
-        req.flash('login_different', '작성자만 수정 및 삭제가 가능합니다.')
-        res.redirect('/users/login_different');
-      }
-    })
-    .catch(err => {
-      console.log("글 삭제 실패");
-    });
+    }else if(session.user !== result1.user){
+      console.log("다른 로그인");
+      req.flash('login_different', '작성자만 수정 및 삭제가 가능합니다.')
+      res.redirect('/users/login_different');
+    }
+  }).catch(err=>{
+    console.log("비로그인");
+    req.flash('login_check', '로그인을 해주세요.')
+    res.redirect('/users/login_check'); 
+  })
 });
-
 
 //댓글 삭제
 router.delete('/reply_delete/:id', function (req, res, next) {
   let id = req.params.id;
-  let session = req.session.passport.user;
+  let session = req.session.passport;
   models.reply.findOne({
     where: { id: id }
   })
     .then(result => {
+      console.log("문제확인"+session);
       if (session === result.user) {
         models.reply.destroy({
           where: { id: id }
@@ -196,17 +200,15 @@ router.delete('/reply_delete/:id', function (req, res, next) {
             console.log("글 삭제");
             res.redirect('back');
           })
-          .catch(err => {
-            console.log("글 삭제 실패");
-          });
-      } else if (session !== result.user) {
+      } else if (!session) {
+        console.log("비로그인");
+        req.flash('login_check', '로그인을 해주세요.')
+        res.redirect('/users/login_check');   
+        
+      } else if(session !== result.user){
         console.log("다른 로그인");
         req.flash('login_different', '작성자만 수정 및 삭제가 가능합니다.')
         res.redirect('/users/login_different');
-      } else {
-        console.log("비로그인");
-        req.flash('login_check', '로그인을 해주세요.')
-        res.redirect('/users/login_check');
       }
     })
 });
@@ -230,10 +232,11 @@ router.put('/reply_update/:id', function (req, res, next) {
             console.log("수정완료");
             res.redirect('back');
           })
-          .catch(err => {
-            console.log(err, "수정 실패");
-          })
-      } else if (session !== result.user) {
+      } else if (!session) {
+        console.log("비로그인");
+        req.flash('login_check', '로그인을 해주세요.')
+        res.redirect('/users/login_check');   
+      } else if(session !== result.user){
         console.log("다른 로그인");
         req.flash('login_different', '작성자만 수정 및 삭제가 가능합니다.')
         res.redirect('/users/login_different');
@@ -281,31 +284,27 @@ router.get("/search", function (req, res, next) {
 router.post("/reply/:id", function (req, res, next) {
   let body = req.body;
   let id = req.params.id;
-  let login_user = req.session.passport.user;
-  console.log(body);
-  if (login_user) {
+  let session = req.session.passport;
+  if (session) {
     models.reply.create({
       postId: id,
-      user: login_user,
+      user: session.user,
       reply: body.reply
     })
       .then(result => {
         console.log("댓글 작성 완료");
         res.redirect('/post/page/' + id);
       })
-      .catch(err => {
-        console.log(err + "댓글 작성 실패");
-      })
-  } else {
-    req.flash('login_check', '로그인을 해주세요')
-    res.redirect('/users/login_check');
+  }else if (!session) {
+    console.log("비로그인");
+    req.flash('login_check', '로그인을 해주세요.')
+    res.redirect('/users/login_check');   
   }
 });
 
 //글 생성
 router.post('/post_make', function (req, res, next) {
   let body = req.body;
-  console.log(body);
   let login_user = req.session.passport.user;
   models.post.create({
     title: body.title,
